@@ -1,8 +1,10 @@
-import { Test } from "@/components/test";
+import { searchbar } from "../components/searchBar";
+
 export default function Home() {
   return (
-    <>
-      <Test />
-    </>
+    <div className="bg-primary h-screen">
+      {searchbar()}
+      <div></div>
+    </div>
   );
 }
