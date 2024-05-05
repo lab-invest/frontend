@@ -4,18 +4,24 @@ import { redArrow } from "@/icons/arrows/redArrow";
 
 function verifyAction(valueAction) {
   if (valueAction > 0) {
-    return ["text-green", "bg-dark_green", greenArrow()];
-  } else if (valueAction == 0) {
-    return ["", "bg-third", arrow()];
+    return {
+      color: "text-green",
+      bgColor: "bg-dark_green",
+      imageArrow: greenArrow(),
+    };
+  } else if (valueAction < 0) {
+    return {
+      color: "text-red",
+      bgColor: "bg-dark_red",
+      imageArrow: redArrow(),
+    };
   } else {
-    return ["text-red", "bg-dark_red", redArrow()];
+    return { color: "", bgColor: "bg-third", imageArrow: arrow() };
   }
 }
 
 export function variation(nameAction, valueAction) {
-  const color = verifyAction(valueAction)[0];
-  const bgColor = verifyAction(valueAction)[1];
-  const imageArrow = verifyAction(valueAction)[2];
+  const { color, bgColor, imageArrow } = verifyAction(valueAction);
 
   const formattedValueAction =
     valueAction > 0 ? `+${valueAction.toFixed(2)}` : valueAction;
