@@ -1,5 +1,5 @@
-import { searchbar } from "@/components/searchBar";
-import { variation } from "@/components/variation";
+import { searchbar } from "../components/searchBar";
+import { variation } from "../components/variation";
 
 export default function Home() {
   return (
