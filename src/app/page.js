@@ -9,9 +9,16 @@ export default function Home() {
       </div>
       <div className="bg-primary h-screen w-full">
         {searchbar()}
-        {variation("PETR4", 320)}
-        {variation("PETR4", -30)}
-        {variation("PETR4", 0)}
+        <div className="flex ml-10 mr-10 justify-between">
+          {variation("PETR4", 320)}
+          {variation("PETR4", -30)}
+          {variation("PETR4", 32)}
+          {variation("PETR4", 2)}
+          {variation("PETR4", -32)}
+          {variation("PETR4", 14)}
+          {variation("PETR4", -10)}
+          {variation("PETR4", -4)}
+        </div>
       </div>
     </div>
   );
