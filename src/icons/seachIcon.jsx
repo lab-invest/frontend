@@ -1,4 +1,4 @@
-export default function searchicon() {
+export function searchicon() {
   return (
     <svg
       className="text-white"
