@@ -1,5 +1,6 @@
+"use client";
 import { searchbar } from "@/components/searchBar";
-import { variation } from "@/components/variation";
+import { VariationDiv } from "@/components/variation/variationDiv";
 
 export default function Home() {
   return (
@@ -9,9 +10,7 @@ export default function Home() {
       </div>
       <div className="bg-primary h-screen w-full">
         {searchbar()}
-        {variation("PETR4", 320)}
-        {variation("PETR4", -30)}
-        {variation("PETR4", 0)}
+        <div>{VariationDiv()}</div>
       </div>
     </div>
   );

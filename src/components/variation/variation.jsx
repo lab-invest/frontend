@@ -23,7 +23,7 @@ export function variation(nameAction, valueAction) {
   return (
     <div
       className={[
-        "w-fit flex items-center justify-center p-1.5 mt-4 ml-10 rounded-lg",
+        "w-fit flex items-center justify-center p-1.5 rounded-lg",
         bgColor,
       ].join(" ")}
     >
