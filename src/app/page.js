@@ -1,11 +1,12 @@
 import { searchbar } from "../components/searchBar";
 import { variation } from "../components/variation";
+import { navbar } from "../components/navbar";
 
 export default function Home() {
   return (
     <div className="flex bg-secondary">
       <div className="w-96">
-        <p>teste</p>
+        {navbar()}
       </div>
       <div className="bg-primary h-screen w-full">
         {searchbar()}

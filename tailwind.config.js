@@ -16,6 +16,7 @@ module.exports = {
       white: "#ffffff",
       dark_red: "#562121",
       dark_green: "#215623",
+      gray: "#A4A4A4",
     },
     textColor: {
       gray: "#A4A4A4",
