@@ -1,3 +1,5 @@
+"use client";
+import { VariationDiv } from "@/components/variation/variationDiv";
 import { navbar } from "../components/navbar";
 import { searchbar } from "../components/searchBar";
 

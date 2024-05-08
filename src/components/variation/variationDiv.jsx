@@ -8,8 +8,12 @@ function addVariations() {
     for (let i = 0; i < 8; i++) {
       variations.push(variation("PETR4", 320));
     }
-  } else {
+  } else if (width > 1200) {
     for (let i = 0; i < 6; i++) {
+      variations.push(variation("PETR4", 320));
+    }
+  } else {
+    for (let i = 0; i < 4; i++) {
       variations.push(variation("PETR4", 320));
     }
   }
@@ -17,7 +21,9 @@ function addVariations() {
 }
 
 export function VariationDiv() {
-  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+  const [windowWidth, setWindowWidth] = useState(
+    typeof window !== "undefined" ? window.innerWidth : 0
+  );
 
   const handleResize = () => {
     setWindowWidth(window.innerWidth);
