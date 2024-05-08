@@ -1,6 +1,6 @@
-import { arrow } from "../icons/arrows/arrow";
-import { greenArrow } from "../icons/arrows/greenArrow";
-import { redArrow } from "../icons/arrows/redArrow";
+import { arrow } from "../../icons/arrows/arrow";
+import { greenArrow } from "../../icons/arrows/greenArrow";
+import { redArrow } from "../../icons/arrows/redArrow";
 
 function verifyAction(valueAction) {
   if (valueAction > 0) {
@@ -31,7 +31,7 @@ export function variation(nameAction, valueAction) {
   return (
     <div
       className={[
-        "w-fit flex items-center justify-center p-1.5 mt-4 rounded-lg",
+        "w-fit flex items-center justify-center p-1.5 rounded-lg",
         bgColor,
       ].join(" ")}
     >
