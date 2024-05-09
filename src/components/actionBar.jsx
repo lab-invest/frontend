@@ -2,12 +2,15 @@ import { searchicon } from "@/icons/seachIcon";
 
 export function actionbar(nameAction) {
   return (
-    <div className="bg-secondary mr-10 ml-10 mt-4 p-4 flex justify-between rounded-lg">
+    <div className="bg-secondary mr-10 ml-10 mt-4 p-3 flex rounded-lg">
       <div className="flex items-center mr-6">
         <div className="mr-2">{searchicon()}</div>
-        <p className=" text-white font-semibold">{nameAction}</p>
+        <p className=" text-white text-sm 2xl:text-base font-semibold">
+          {nameAction}
+        </p>
       </div>
-      <div className="flex text-base w-full justify-between">
+
+      <div className="flex 2xl:text-base text-xs w-full justify-between pr-4">
         <div className="flex items-center text-gray">
           <p>Open</p>
           <div className="w-10 mr-1 ml-1 h-0.5 bg-third rounded-xl"></div>
