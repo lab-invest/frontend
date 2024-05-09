@@ -1,5 +1,5 @@
+import { searchicon } from "../../public/icons/seachIcon";
 import { Input } from "../components/ui/input";
-import { searchicon } from "../icons/seachIcon";
 
 export function searchbar() {
   return (

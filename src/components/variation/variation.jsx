@@ -1,6 +1,6 @@
-import { arrow } from "../../icons/arrows/arrow";
-import { greenArrow } from "../../icons/arrows/greenArrow";
-import { redArrow } from "../../icons/arrows/redArrow";
+import { arrow } from "../../../public/icons/arrows/arrow";
+import { greenArrow } from "../../../public/icons/arrows/greenArrow";
+import { redArrow } from "../../../public/icons/arrows/redArrow";
 
 function verifyAction(valueAction) {
   if (valueAction > 0) {
