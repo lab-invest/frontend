@@ -12,8 +12,8 @@ export default function Home() {
   }
 
   return (
-    <main className="flex min-h-screen flex-col items-center  p-24">
-      <h1 className="font-bold">LOGIN ROUTE</h1>
+    <main className="flex flex-col justify-center items-center bg-primary h-screen">
+      <h1 className="font-bold text-white pb-20">LOGIN ROUTE</h1>
       <button
         onClick={submiLogin}
         className="p-3 bg-gray-500 border rounded text-white"
