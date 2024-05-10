@@ -1,4 +1,4 @@
-import { searchicon } from "@/icons/seachIcon";
+import { searchicon } from "../../public/icons/seachIcon";
 
 export function actionbar(nameAction) {
   return (

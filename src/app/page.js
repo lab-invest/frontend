@@ -1,20 +1,25 @@
 "use client";
-import { actionbar } from "@/components/actionBar";
-import { VariationDiv } from "@/components/variation/variationDiv";
-import { navbar } from "../components/navbar";
-import { searchbar } from "../components/searchBar";
+
+import { setCookie } from "cookies-next";
+import { useRouter } from "next/navigation";
 
 export default function Home() {
+  const router = useRouter();
+
+  function submiLogin() {
+    setCookie("user", "Logged");
+    router.push("/home");
+  }
+
   return (
-    <div className="flex bg-secondary">
-      <div className="w-96">{navbar()}</div>
-      <div className="bg-primary h-screen w-full">
-        {searchbar()}
-        <div>
-          {VariationDiv()}
-          {actionbar("PETR4 ")}
-        </div>
-      </div>
-    </div>
+    <main className="flex flex-col justify-center items-center bg-primary h-screen">
+      <h1 className="font-bold text-white pb-20">LOGIN ROUTE</h1>
+      <button
+        onClick={submiLogin}
+        className="p-3 bg-gray-500 border rounded text-white"
+      >
+        LOGIN
+      </button>
+    </main>
   );
 }
