@@ -24,6 +24,9 @@ module.exports = {
       red: "#FF3131",
       green: "#00CD00",
     },
+    borderColor: {
+      green: "#00CD00",
+    },
   },
   plugins: [require("tailwindcss-animate")],
 };
