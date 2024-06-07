@@ -1,32 +1,31 @@
-'use client'
+"use client";
 
-/* eslint-disable @next/next/no-img-element */
-import { deleteCookie } from 'cookies-next'
-import { useRouter } from 'next/navigation'
-import NavButton from '../../UI/NavButton'
+import { deleteCookie } from "cookies-next";
+import { useRouter } from "next/navigation";
+import NavButton from "./NavButton";
 
 export function Navbar() {
-  const router = useRouter()
+  const router = useRouter();
 
-  console.log(router.pathname)
+  console.log(router.pathname);
 
   function submiLogout() {
-    deleteCookie('user')
-    router.push('/')
+    deleteCookie("user");
+    router.push("/");
   }
 
   return (
     <nav className="pl-10 pt-2 pb-2 pr-6 h-full bg-secondary">
       <div className=" h-3/4 flex flex-col">
-        {NavButton('/home', 'Home')}
-        {NavButton('/actions', 'Ações')}
-        {NavButton('/wallets', 'Carteiras')}
+        {NavButton("/home", "Home")}
+        {NavButton("/actions", "Ações")}
+        {NavButton("/wallets", "Carteiras")}
 
-        {NavButton('/help', 'Help')}
+        {NavButton("/help", "Help")}
       </div>
 
       <div className="flex flex-col justify-evenly h-1/4">
-        <div>{NavButton('/settings', 'Configurações')}</div>
+        <div>{NavButton("/settings", "Configurações")}</div>
         <div className="flex">
           <div className="w-10 h-10 mr-8 rounded-full border">
             <img
@@ -46,5 +45,5 @@ export function Navbar() {
         </div>
       </div>
     </nav>
-  )
+  );
 }
