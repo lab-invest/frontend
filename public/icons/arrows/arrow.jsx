@@ -9,5 +9,5 @@ export function arrow() {
     >
       <path d="M12 6L0 0L2.25 6L0 12L12 6Z" fill="#A4A4A4" />
     </svg>
-  )
+  );
 }
