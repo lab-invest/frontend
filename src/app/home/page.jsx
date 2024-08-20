@@ -15,7 +15,7 @@ export default function Home() {
         <VariationDiv />
         <div className="flex justify-between px-4">
           <div>{welcomeName()}</div>
-          <div>{walletValue()}</div>
+          <div className="mr-6 mt-6 sm:mr-8 sm:mt-10 lg:mr-9 lg:mt-12">{walletValue()}</div>
         </div>
       </div>
     </div>

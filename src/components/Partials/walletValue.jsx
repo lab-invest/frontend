@@ -2,7 +2,7 @@ import { greenArrow } from "../../../public/icons/arrows/greenArrow";
 
 export function walletValue() {
   return (
-    <div className="border-r-4 border-green text-white mr-6 mt-6 sm:mr-8 sm:mt-10 lg:mr-9 lg:mt-12">
+    <div className="border-r-4 border-green text-white ">
       <div className="text-right pr-3 sm:pr-8 lg:pr-10">
         <p className="text-gray text-xs sm:text-sm lg:text-lg">Total das carteiras</p>
         <h1 className="text-2xl sm:text-3xl lg:text-4xl font-semibold pt-1 sm:pt-2">R$ X,XX</h1>
