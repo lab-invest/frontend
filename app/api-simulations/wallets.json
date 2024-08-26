@@ -1,0 +1,62 @@
+[
+  {
+    "id": "1",
+    "title": "Carteira de Investimentos",
+    "balance": 5000.5,
+    "variation": 2.34
+  },
+  {
+    "id": "2",
+    "title": "Carteira Poupança",
+    "balance": 12000.75,
+    "variation": 0.89
+  },
+  {
+    "id": "3",
+    "title": "Carteira de Criptomoedas",
+    "balance": 3000.0,
+    "variation": -5.67
+  },
+  {
+    "id": "4",
+    "title": "Carteira Ações",
+    "balance": 8000.25,
+    "variation": 3.45
+  },
+  {
+    "id": "5",
+    "title": "Carteira Renda Fixa",
+    "balance": 15000.0,
+    "variation": 1.12
+  },
+  {
+    "id": "6",
+    "title": "Carteira Previdência",
+    "balance": 10000.0,
+    "variation": 0.65
+  },
+  {
+    "id": "7",
+    "title": "Carteira Fundos Imobiliários",
+    "balance": 6000.5,
+    "variation": 2.78
+  },
+  {
+    "id": "8",
+    "title": "Carteira Tesouro Direto",
+    "balance": 11000.3,
+    "variation": 0.95
+  },
+  {
+    "id": "9",
+    "title": "Carteira Multimercado",
+    "balance": 9000.45,
+    "variation": 1.89
+  },
+  {
+    "id": "10",
+    "title": "Carteira Internacional",
+    "balance": 7000.75,
+    "variation": 2.01
+  }
+]
