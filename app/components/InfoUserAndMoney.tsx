@@ -17,7 +17,7 @@ export default function InfoUserAndMoney({
           Ismael Amex
         </h1>
       </div>
-      <div>
+      <div className="flex gap-6">
         <div className="flex flex-col gap-y-1 text-center items-end">
           <p className="text-gray text-xs sm:text-sm lg:text-md">{textPts}</p>
           <h1 className="text-white text-2xl sm:text-3xl lg:text-4xl font-semibold">
@@ -31,6 +31,7 @@ export default function InfoUserAndMoney({
             <p className="text-gray">(12 meses)</p>
           </div>
         </div>
+        <div className="w-0.5 bg-green-900"></div>
       </div>
     </div>
   );
