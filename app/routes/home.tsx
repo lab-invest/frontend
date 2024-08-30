@@ -27,7 +27,7 @@ export default function Home() {
         <div className="pt-6">
           <InfoUserAndMoney text="Bem vindo" textPts="Todas as carteiras" />
         </div>
-        <div className="flex justify-between pt-4">
+        <div className="flex justify-between pt-8">
           {data.slice(0, 3).map((wallet) => (
             <Wallets
               key={wallet.id}

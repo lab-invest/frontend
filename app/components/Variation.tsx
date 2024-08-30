@@ -51,7 +51,10 @@ export default function Variation({
         <p className="font-semibold text-white text-xs">{nameAction}</p>
       </div>
       <div className="flex text-center justify-center">
-        <p className={`text-xs ${color}`}> {formattedValueAction}%</p>
+        <p className={`text-xs font-semibold ${color}`}>
+          {" "}
+          {formattedValueAction}%
+        </p>
       </div>
     </div>
   );
