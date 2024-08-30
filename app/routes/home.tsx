@@ -10,7 +10,7 @@ import { ensureAuthenticated } from "~/utils/session.server";
 import data from "../api-simulations/wallets.json";
 
 export const meta: MetaFunction = () => {
-  return [{ title: "Login" }];
+  return [{ title: "Home" }];
 };
 
 export const loader = async ({ request }: LoaderFunctionArgs) => {

@@ -1,6 +1,6 @@
 import { createCookieSessionStorage, redirect } from "@remix-run/node";
 import { signInWithEmailAndPassword } from "firebase/auth";
-import { auth } from "~/firebase/firebaseConfig";
+import { auth } from "~/config";
 
 import type { User } from "~/types/user";
 
