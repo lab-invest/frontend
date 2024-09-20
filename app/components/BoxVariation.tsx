@@ -4,7 +4,7 @@ import Variation from "./Variation";
 function addVariations(width: number) {
   const variations = [];
   if (width > 1400) {
-    for (let i = 0; i < 7; i++) {
+    for (let i = 0; i < 8; i++) {
       variations.push(
         <Variation key={i} nameAction="PETR4" valueAction={320} />
       );

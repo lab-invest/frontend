@@ -1,8 +1,8 @@
-import type { ActionFunction, MetaFunction } from "@remix-run/node";
-import { json, useFetcher } from "@remix-run/react";
+import type { MetaFunction } from "@remix-run/node";
+import { useFetcher } from "@remix-run/react";
 import { useEffect, useState } from "react";
+import { loginAction } from "~/actions/loginAction";
 import { Box, Button, Textfield, Toast } from "~/components";
-import { createUserSession } from "~/utils/session.server";
 
 interface FetcherData {
   error?: string;
@@ -17,21 +17,7 @@ export const meta: MetaFunction = () => {
 //   return await ensureAuthenticated(request);
 // };
 
-export const action: ActionFunction = async ({ request }) => {
-  const formData = await request.formData();
-  const email = formData.get("email") as string;
-  const password = formData.get("senha") as string;
-
-  try {
-    const session = await createUserSession(request, email, password);
-    return session;
-  } catch (error) {
-    return json(
-      { error: "Erro ao fazer login, verifique suas credenciais." },
-      { status: 400 }
-    );
-  }
-};
+export const action = loginAction;
 
 export default function Login() {
   const fetcher = useFetcher<FetcherData>();
@@ -53,9 +39,8 @@ export default function Login() {
   }, [fetcher.state, fetcher.data]);
 
   return (
-    <main className="flex items-center justify-center min-h-screen bg-[#252525]">
-      <div className="bg-[url('/images/Register.png')] bg-cover bg-center w-screen absolute h-full" />
-      <Box className="gap-y-6">
+    <main className="flex items-center justify-center min-h-screen bg-[url('/images/Register.png')] bg-cover bg-center">
+      <Box>
         <h3 className="text-base font-semibold text-center">
           Que bom te ver de novo!
         </h3>

@@ -22,6 +22,8 @@ export { default as Searchbar } from "./Searchbar";
 
 export { default as Wallets } from "./Wallets";
 
-export { default as ActionBox } from "./Actionbox";
-
 export { default as Predict } from "./Predict";
+
+export { default as InfoActionPoints } from "./InfoActionPoints";
+
+export { default as SpecActions } from "./SpecActions";

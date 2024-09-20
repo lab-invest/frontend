@@ -5,6 +5,10 @@ interface ButtonsNavbarProps {
   text: string;
 }
 
+interface NavbarProps {
+  name: string;
+}
+
 function ButtonsNavbar({ href, text }: ButtonsNavbarProps) {
   const location = useLocation();
   const pathname = location.pathname;
@@ -24,7 +28,7 @@ function ButtonsNavbar({ href, text }: ButtonsNavbarProps) {
   );
 }
 
-export default function Navbar() {
+export default function Navbar({ name }: NavbarProps) {
   const fetcher = useFetcher();
 
   const buttons = [
@@ -58,11 +62,8 @@ export default function Navbar() {
             />
           </div>
           <div>
-            <p className="text-white font-medium">Giovanna</p>
+            <p className="text-white font-medium">{name}</p>
             <div className="flex text-gray underline text-xs">
-              {/* <button onClick={submitLogout}>
-                <p>Sair</p>
-              </button> */}
               <fetcher.Form action="/logout" method="post">
                 <button type="submit">
                   <p>Sair</p>

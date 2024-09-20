@@ -39,10 +39,12 @@ export async function createUserSession(
     email,
     password
   );
+
   session.set("currentUser", {
     email,
     uid: userCredential.user.uid,
   });
+
   const cookie = await sessionStorage.commitSession(session, {
     maxAge: ONE_WEEK,
   });
@@ -57,7 +59,9 @@ export async function createUserSession(
 
 export async function getUser(request: Request) {
   const session = await getSession(request);
-  return session.get("currentUser") as User;
+  const currentUser = session.get("currentUser") as User;
+  console.log("Usuário atual recuperado da sessão:", currentUser.uid);
+  return currentUser;
 }
 
 export async function ensureAuthenticated(request: Request) {

@@ -1,12 +1,11 @@
 interface BoxProps {
   children: React.ReactNode;
-  className?: string;
 }
 
-export default function Box({ children, className }: BoxProps) {
+export default function Box({ children }: BoxProps) {
   return (
     <div
-      className={`flex flex-col min-w-96 w-1/3 px-5 py-6 text-left bg-white rounded-md z-10 ${className}`}
+      className={`flex flex-col gap-y-6 w-1/3 px-5 py-6 bg-white rounded-md`}
     >
       {children}
     </div>

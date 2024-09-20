@@ -4,23 +4,25 @@ import {
   InfoUserAndMoney,
   Navbar,
   Searchbar,
-  Wallets,
 } from "~/components";
+import { getUserData } from "~/services/userData";
 import { ensureAuthenticated } from "~/utils/session.server";
-import data from "../api-simulations/wallets.json";
+// import data from "../api-simulations/wallets.json";
 
 export const meta: MetaFunction = () => {
   return [{ title: "Home" }];
 };
 
 export const loader = async ({ request }: LoaderFunctionArgs) => {
-  return await ensureAuthenticated(request);
+  await ensureAuthenticated(request);
+  // const user = await getUser(request);
+  return getUserData();
 };
 
 export default function Home() {
   return (
     <div className="flex h-screen">
-      <Navbar />
+      <Navbar name="Smoll" />
       <div className="flex flex-col bg-primary w-full px-10 gap-4 pt-6">
         <Searchbar />
         <BoxVariation />
@@ -28,14 +30,14 @@ export default function Home() {
           <InfoUserAndMoney text="Bem vindo" textPts="Todas as carteiras" />
         </div>
         <div className="flex justify-between pt-8">
-          {data.slice(0, 3).map((wallet) => (
+          {/* {data.slice(0, 3).map((wallet) => (
             <Wallets
               key={wallet.id}
               nameWallet={wallet.title}
               valueWallet={wallet.balance}
               variationWallet={wallet.variation}
             />
-          ))}
+          ))} */}
         </div>
       </div>
     </div>
