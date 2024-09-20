@@ -15,7 +15,7 @@ interface ConfigsProps {
           className={`px-3.5 py-1.5 text-white text-sm rounded-md 
           ${isDestructive ? 'bg-red-600 hover:bg-red-700' : 'bg-purple-600 hover:bg-purple-700'}`}
         >
-          {isDestructive ? 'Destructive' : 'Continue'}
+          {isDestructive ? 'Deletar' : 'Continuar'}
         </button>
       </div>
     );

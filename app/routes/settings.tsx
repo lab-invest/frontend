@@ -20,11 +20,11 @@ export default function Config() {
         <h1 className="text-white font-semibold text-2xl">Configurações</h1>
         <div className="flex">
           <div className="flex flex-col w-2/3 gap-4">
-            <Configs name="Nome completo" description="Giovanna Bregantin" />
+            <Configs name="Nome Completo" description="Giovanna Bregantin" />
             <Configs name="Senha" description="***************" />
             <Configs name="Data Nascimento" description="20/11/2006" />
-            <Configs name="Resetar conta" description="Ao fazer isso todos os dados da sua conta serão redefinidos" />
-            <Configs name="Deletar conta" description="Ao fazer isso sua conta será totalmente apagada" isDestructive={true} />
+            <Configs name="Resetar Conta" description="Ao fazer isso todos os dados da sua conta serão redefinidos" />
+            <Configs name="Deletar Conta" description="Ao fazer isso sua conta será totalmente apagada" isDestructive={true} />
           </div>
           <div className="flex flex-col items-center w-1/3 gap-4">
             <img
