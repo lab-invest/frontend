@@ -21,10 +21,10 @@ export default function Config() {
         <div className="flex">
           <div className="flex flex-col w-2/3 gap-4">
             <Configs name="Nome completo" description="Giovanna Bregantin" />
-            <Configs name="Password" description="***************" />
+            <Configs name="Senha" description="***************" />
             <Configs name="Data Nascimento" description="20/11/2006" />
-            <Configs name="Reset Account" description="Ao fazer isso todos os dados da sua conta serão redefinidos" />
-            <Configs name="Delete Account" description="Ao fazer isso sua conta será totalmente apagada" isDestructive={true} />
+            <Configs name="Resetar conta" description="Ao fazer isso todos os dados da sua conta serão redefinidos" />
+            <Configs name="Deletar conta" description="Ao fazer isso sua conta será totalmente apagada" isDestructive={true} />
           </div>
           <div className="flex flex-col items-center w-1/3 gap-4">
             <img
