@@ -16,9 +16,8 @@ export default function Config() {
   return (
     <div className="flex h-screen">
       <Navbar />
-      <div className="flex flex-col w-full bg-zinc-900 px-10 py-6 gap-4">
+      <div className="flex flex-col w-full bg-primary px-10 py-6 gap-4">
         <h1 className="text-white font-semibold text-2xl">Configurações</h1>
-        
         <div className="flex">
           <div className="flex flex-col w-2/3 gap-4">
             <Configs name="Nome completo" description="Giovanna Bregantin" />
