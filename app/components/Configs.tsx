@@ -6,7 +6,7 @@ interface ConfigsProps {
   
   export default function Configs({ name, description, isDestructive = false }: ConfigsProps) {
     return (
-      <div className="flex justify-between items-center p-4 bg-gray-800 rounded-md bg-secondary">
+      <div className="flex justify-between items-center p-4 bg-gray-800 rounded-md bg-secondary w-full">
         <div>
           <p className="text-white font-semibold">{name}</p>
           <p className="text-neutral-500 font-medium text-sm">{description}</p>
