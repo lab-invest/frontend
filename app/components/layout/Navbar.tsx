@@ -5,16 +5,12 @@ interface ButtonsNavbarProps {
   text: string;
 }
 
-interface NavbarProps {
-  name: string;
-}
-
 function ButtonsNavbar({ href, text }: ButtonsNavbarProps) {
   const location = useLocation();
   const pathname = location.pathname;
-  let color = "bg-gray";
 
-  if (pathname === href) {
+  let color = "bg-gray";
+  if (pathname.startsWith(href)) {
     color = "bg-purple-600";
   }
 
@@ -28,7 +24,7 @@ function ButtonsNavbar({ href, text }: ButtonsNavbarProps) {
   );
 }
 
-export default function Navbar({ name }: NavbarProps) {
+export default function Navbar() {
   const fetcher = useFetcher();
 
   const buttons = [
@@ -56,13 +52,13 @@ export default function Navbar({ name }: NavbarProps) {
         <div className="flex">
           <div className="w-10 h-10 mr-2 rounded-full border">
             <img
-              src="https://img.freepik.com/fotos-gratis/besta-de-dragao-mitico-no-estilo-anime_23-2151112832.jpg"
+              src={"https://i.ytimg.com/vi/0aSyKFQ7KAo/maxresdefault.jpg"}
               alt="teste"
               className="w-full h-full rounded-full"
             />
           </div>
           <div>
-            <p className="text-white font-medium">{name}</p>
+            <p className="text-white font-medium">{`smoll`}</p>
             <div className="flex text-gray underline text-xs">
               <fetcher.Form action="/logout" method="post">
                 <button type="submit">

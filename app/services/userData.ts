@@ -1,40 +1,14 @@
-// interface Stock {
-//   ticker: string;
-//   quantity: number;
-//   average_price: number;
-// }
+import axios from "axios";
 
-// interface Wallet {
-//   [key: string]: Stock;
-// }
-
-// interface UserData {
-//   uid: string;
-//   cpf: string;
-//   name: string;
-//   email: string;
-//   password: string;
-//   birth_date: string;
-//   balance: number;
-//   //   wallets: {
-//   //     [walletName: string]: Wallet;
-//   //     // mapeamento
-//   //   };
-//   //   user_photo: string;
-// }
-
-export const getUserData = async (): Promise<object | null> => {
+export async function GetData(uid: string) {
   try {
-    const response = await fetch(`http://localhost:3000/user/get`);
-    console.log(response);
-    if (!response.ok) {
-      throw new Error("Erro na requisição");
-    }
-    const data = response.json();
-    console.log(data);
-    return data;
+    const response = await axios.get(
+      `https://13c94aa8-65b0-4d9e-b6ec-2919ebbe9f68.mock.pstmn.io/userDataGet?uid=${uid}`
+    );
+    console.log(response.data);
+    return response.data;
   } catch (error) {
-    console.error("Erro ao fazer a requisição:", error);
-    return null;
+    console.error("Erro ao buscar dados do usuário:", error);
+    throw new Error("Falha ao buscar os dados.");
   }
-};
+}

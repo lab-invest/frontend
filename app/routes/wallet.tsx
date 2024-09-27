@@ -1,21 +1,17 @@
-import { LoaderFunctionArgs } from "@remix-run/node";
-import { MetaFunction } from "@remix-run/react";
-import { Navbar } from "~/components";
-import { ensureAuthenticated } from "~/utils/session.server";
+import { MetaFunction, Outlet } from "@remix-run/react";
+import { Layout } from "~/components";
+import { simpleLoader } from "~/loader/simpleLoader";
 
 export const meta: MetaFunction = () => {
   return [{ title: "Carteiras" }];
 };
 
-export const loader = async ({ request }: LoaderFunctionArgs) => {
-  return await ensureAuthenticated(request);
-};
+export const loader = simpleLoader;
 
 export default function Wallet() {
   return (
-    <div className="flex h-screen">
-      <Navbar />
-      <div className="flex flex-col bg-primary w-full px-10 gap-4 pt-6"></div>
-    </div>
+    <Layout className="gap-y-5">
+      <Outlet />
+    </Layout>
   );
 }

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import Variation from "./Variation";
+import Variation from "./variation";
 
 function addVariations(width: number) {
   const variations = [];

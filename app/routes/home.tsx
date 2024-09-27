@@ -1,45 +1,41 @@
-import { LoaderFunctionArgs, MetaFunction } from "@remix-run/node";
+import { MetaFunction } from "@remix-run/node";
 import {
   BoxVariation,
   InfoUserAndMoney,
-  Navbar,
+  Layout,
   Searchbar,
+  Wallets,
 } from "~/components";
-import { getUserData } from "~/services/userData";
-import { ensureAuthenticated } from "~/utils/session.server";
-// import data from "../api-simulations/wallets.json";
+import { simpleLoader } from "~/loader/simpleLoader";
 
 export const meta: MetaFunction = () => {
   return [{ title: "Home" }];
 };
 
-export const loader = async ({ request }: LoaderFunctionArgs) => {
-  await ensureAuthenticated(request);
-  // const user = await getUser(request);
-  return getUserData();
-};
+export const loader = simpleLoader;
 
 export default function Home() {
+  // const { userData } = useLoaderData<{ userData: UserData }>();
+
   return (
-    <div className="flex h-screen">
-      <Navbar name="Smoll" />
-      <div className="flex flex-col bg-primary w-full px-10 gap-4 pt-6">
-        <Searchbar />
-        <BoxVariation />
-        <div className="pt-6">
-          <InfoUserAndMoney text="Bem vindo" textPts="Todas as carteiras" />
-        </div>
-        <div className="flex justify-between pt-8">
-          {/* {data.slice(0, 3).map((wallet) => (
-            <Wallets
-              key={wallet.id}
-              nameWallet={wallet.title}
-              valueWallet={wallet.balance}
-              variationWallet={wallet.variation}
-            />
-          ))} */}
-        </div>
+    <Layout className="gap-y-5">
+      <Searchbar />
+      <BoxVariation />
+      <InfoUserAndMoney
+        percentChange={3}
+        text="Bem vindo"
+        // nameUser={userData.name}
+        nameUser="Ismael"
+        // walletValue={userData.balance}
+        walletValue={1000}
+        textPts="Todas as carteiras"
+      />
+      <div className="grid grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4">
+        <Wallets growth={20} id="3" name="teste" price={230} />
+        <Wallets growth={20} id="3" name="teste" price={230} />
+        <Wallets growth={20} id="3" name="teste" price={230} />
+        <Wallets growth={20} id="3" name="teste" price={230} />
       </div>
-    </div>
+    </Layout>
   );
 }
