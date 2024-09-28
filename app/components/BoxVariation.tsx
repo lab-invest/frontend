@@ -26,20 +26,25 @@ function addVariations(width: number) {
 }
 
 export default function BoxVariation() {
-  const [windowWidth, setWindowWidth] = useState(
-    typeof window !== "undefined" ? window.innerWidth : 0
-  );
-
-  const handleResize = () => {
-    setWindowWidth(window.innerWidth);
-  };
+  const [isClient, setIsClient] = useState(false);
+  const [windowWidth, setWindowWidth] = useState(0);
 
   useEffect(() => {
+    setIsClient(true);
+    const handleResize = () => {
+      setWindowWidth(window.innerWidth);
+    };
+
     window.addEventListener("resize", handleResize);
+    handleResize();
     return () => {
       window.removeEventListener("resize", handleResize);
     };
   }, []);
+
+  if (!isClient) {
+    return null;
+  }
 
   return (
     <div className="flex justify-between">{addVariations(windowWidth)}</div>

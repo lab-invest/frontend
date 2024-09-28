@@ -4,6 +4,7 @@ interface ButtonProps {
   text: string;
   variant: "active" | "disable" | "buy" | "delete";
   type: "submit" | "button";
+  onClickFunction?: () => void;
 }
 
 const button = tv({
@@ -18,9 +19,18 @@ const button = tv({
   },
 });
 
-export default function Button({ text, variant, type }: ButtonProps) {
+export default function Button({
+  text,
+  variant,
+  type,
+  onClickFunction,
+}: ButtonProps) {
   return (
-    <button type={type} className={button({ variant })}>
+    <button
+      type={type}
+      className={button({ variant })}
+      onClick={onClickFunction}
+    >
       {text}
     </button>
   );
