@@ -39,3 +39,5 @@ export { default as QuestionBox } from "./QuestionBox";
 export { default as PercentChangeIndicator } from "./PercentualIndicator";
 
 export { default as ActionBar } from "./BarActions";
+
+export { default as InfoActionDetails } from "./InfoActionDetails";

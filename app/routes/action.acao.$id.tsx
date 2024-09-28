@@ -27,9 +27,9 @@ export default function SpecificWallet() {
         </div>
       </div>
       <ActionBar nameAction="P3TR4" />
-      <div>
-        <button>Comprar</button>
-        <button>Vender</button>
+      <div className="flex h-10 gap-x-10 text-white">
+        <button className="bg-green-700 rounded w-full">Comprar</button>
+        <button className="bg-red-700 rounded w-full">Vender</button>
       </div>
     </div>
   );

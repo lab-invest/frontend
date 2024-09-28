@@ -6,6 +6,12 @@ export default function ActionBar({ nameAction }: ActionbarProps) {
   return (
     <div className="bg-secondary p-3 flex rounded-sm">
       <div className="flex items-center mr-6">
+        <div className="w-6 mr-4">
+          <img
+            src="https://s3-symbol-logo.tradingview.com/brasileiro-petrobras--600.png"
+            alt="teste"
+          />
+        </div>
         <p className=" text-white text-sm 2xl:text-base font-semibold">
           {nameAction}
         </p>
