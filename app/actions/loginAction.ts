@@ -6,6 +6,7 @@ export const loginAction = async ({ request }: ActionFunctionArgs) => {
   const formData = await request.formData();
   const email = formData.get("email") as string;
   const password = formData.get("senha") as string;
+  console.log(email, password);
 
   try {
     const session = await createUserSession(request, email, password);
