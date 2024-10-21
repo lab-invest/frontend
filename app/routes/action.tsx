@@ -1,9 +1,16 @@
-import { Outlet } from "@remix-run/react";
+import { Outlet, useLoaderData } from "@remix-run/react";
 import { Layout } from "~/components";
+import { simpleLoader } from "~/loader/simpleLoader";
+import { UserData } from "~/types/userData";
 
-export default function action() {
+export const loader = simpleLoader;
+
+export default function Action() {
+  const loaderData = useLoaderData<{ userData: UserData }>();
+  const userData = loaderData.userData;
+
   return (
-    <Layout>
+    <Layout userData={userData}>
       <Outlet />
     </Layout>
   );

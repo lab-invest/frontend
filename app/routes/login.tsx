@@ -48,6 +48,7 @@ export default function Login() {
           <div className="flex flex-col gap-y-4">
             <Textfield
               labelText="Email"
+              placeholder="Insira seu email"
               type="email"
               name="email"
               isDisabled={false}
@@ -55,6 +56,7 @@ export default function Login() {
             <Textfield
               labelText="Senha"
               type="password"
+              placeholder="Insira sua senha"
               name="senha"
               isDisabled={false}
             />

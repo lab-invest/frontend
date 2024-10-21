@@ -1,6 +1,7 @@
-import { MetaFunction } from "@remix-run/react";
+import { MetaFunction, useLoaderData } from "@remix-run/react";
 import { ConfigOptions, Layout, ProfileImage } from "~/components";
 import { simpleLoader } from "~/loader/simpleLoader";
+import { UserData } from "~/types/userData";
 
 export const meta: MetaFunction = () => {
   return [{ title: "Carteiras" }];
@@ -9,8 +10,11 @@ export const meta: MetaFunction = () => {
 export const loader = simpleLoader;
 
 export default function Config() {
+  const loaderData = useLoaderData<{ userData: UserData }>();
+  const userData = loaderData.userData;
+
   return (
-    <Layout className="gap-4">
+    <Layout userData={userData} className="gap-4">
       <h1 className="text-2xl font-semibold text-white">Configurações</h1>
       <div className="flex">
         <div className="flex flex-col justify-between w-full min-h-[500px]">

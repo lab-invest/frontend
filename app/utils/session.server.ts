@@ -60,7 +60,6 @@ export async function createUserSession(
 export async function getUser(request: Request) {
   const session = await getSession(request);
   const currentUser = session.get("currentUser") as User;
-  console.log("Usuário atual recuperado da sessão:", currentUser.uid);
   return currentUser;
 }
 

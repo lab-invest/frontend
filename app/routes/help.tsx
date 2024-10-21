@@ -1,6 +1,7 @@
-import { MetaFunction } from "@remix-run/react";
+import { MetaFunction, useLoaderData } from "@remix-run/react";
 import { Layout, QuestionBox } from "~/components";
 import { simpleLoader } from "~/loader/simpleLoader";
+import { UserData } from "~/types/userData";
 
 export const meta: MetaFunction = () => {
   return [{ title: "Ajuda" }];
@@ -9,6 +10,9 @@ export const meta: MetaFunction = () => {
 export const loader = simpleLoader;
 
 export default function Help() {
+  const loaderData = useLoaderData<{ userData: UserData }>();
+  const userData = loaderData.userData;
+
   const faq = [
     {
       question: "Quais são os melhores tipos de investimento para iniciantes?",
@@ -38,7 +42,7 @@ export default function Help() {
   ];
 
   return (
-    <Layout>
+    <Layout userData={userData}>
       <div className="flex flex-col justify-evenly h-full">
         {faq.map((item, index) => (
           <div key={index}>
