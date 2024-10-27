@@ -5,7 +5,7 @@ export type DefaultUserData = {
   password: string;
   birth: string;
   cpf: string;
-  confirmPassword: string;
+  confirmPassword?: string;
 };
 
 export default class AppData {
@@ -19,9 +19,50 @@ export default class AppData {
     return this.makeRequest(`/user?uuid=${encodeURIComponent(uid)}`, "GET");
   }
 
+  async getUserWallets(uid: string): Promise<JSON> {
+    return this.makeRequest(
+      `/user/wallet?uuid=${encodeURIComponent(uid)}`,
+      "GET"
+    );
+  }
+
+  async getUserBalance(uid: string): Promise<JSON> {
+    return this.makeRequest(
+      `/user/balance?uuid=${encodeURIComponent(uid)}`,
+      "GET"
+    );
+  }
+
+  async deleteUser(uid: string): Promise<JSON> {
+    return this.makeRequest(`/user?uuid=${encodeURIComponent(uid)}`, "DELETE");
+  }
+
+  async updateUserName(uid: string, name: string): Promise<JSON> {
+    return this.makeRequest(`/updateName`, "PATCH", {
+      uuid: uid,
+      name,
+    });
+  }
+
+  async resetAccount(uid: string): Promise<JSON> {
+    return this.makeRequest(`/cleanUser?uuid=${uid}`, "PATCH");
+  }
+
+  async createUserData(data: DefaultUserData): Promise<JSON> {
+    return this.makeRequest("/user", "POST", {
+      uuid: data.uid,
+      cpf: data.cpf,
+      name: data.name,
+      email: data.email,
+      password: data.password,
+      birth_date: data.birth,
+      user_photo: "",
+    });
+  }
+
   private async makeRequest<T>(
     endpoint: string,
-    method: "GET" | "POST" | "PUT" | "DELETE",
+    method: "GET" | "POST" | "PUT" | "DELETE" | "PATCH",
     data?: object,
     additionalHeaders: Record<string, string> = {}
   ): Promise<T> {
@@ -42,7 +83,7 @@ export default class AppData {
     }
 
     try {
-      // console.log(`Making ${method} request to URL:`, url); // Log para depurar a URL e o método
+      console.log(`Making ${method} request to URL:`, url); // Log para depurar a URL e o método
       const response = await fetch(url, options);
 
       if (!response.ok) {
@@ -52,8 +93,14 @@ export default class AppData {
         );
       }
 
-      // console.log(`Response from ${method} request:`, response); // Log da resposta
-      return response.json();
+      const contentType = response.headers.get("content-type");
+      if (contentType && contentType.includes("application/json")) {
+        // Retorna a resposta parseada como JSON
+        return await response.json();
+      } else {
+        // Retorna a resposta como texto se não for JSON
+        return (await response.text()) as unknown as T;
+      }
     } catch (error) {
       console.error(`Error during ${method} request to ${url}:`, error);
       throw error;

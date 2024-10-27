@@ -52,7 +52,7 @@ export default function InfoUserAndMoney({
           {nameUser}
         </h1>
       </div>
-      <div className="flex gap-6 items-center">
+      <div className="flex gap-y-6 items-center">
         <div className="flex flex-col gap-y-1 text-center items-end">
           <p className="text-gray text-xs sm:text-sm lg:text-md">{textPts}</p>
           <h1 className="text-white text-2xl sm:text-3xl lg:text-4xl font-semibold">

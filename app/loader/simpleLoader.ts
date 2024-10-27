@@ -6,8 +6,7 @@ export const simpleLoader = async ({ request }: { request: Request }) => {
   const user = await getUser(request);
 
   if (!user) {
-    redirect("/login");
-    throw new Response("User not found", { status: 404 });
+    return redirect("/login");
   }
 
   const userDataGet = new AppData();

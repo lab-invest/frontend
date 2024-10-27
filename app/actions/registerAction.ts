@@ -1,5 +1,7 @@
 import { ActionFunctionArgs } from "@remix-run/node";
 import { json } from "@remix-run/react";
+import AppData from "~/services/appData";
+import { registerUser } from "~/utils/session.server";
 
 export const registerAction = async ({ request }: ActionFunctionArgs) => {
   const formData = await request.formData();
@@ -12,32 +14,38 @@ export const registerAction = async ({ request }: ActionFunctionArgs) => {
 
   console.log(name, email, password, birth, cpf, confirmPassword);
 
-  try {
-    if (
-      name != "" &&
-      email != "" &&
-      password != "" &&
-      birth != "" &&
-      cpf != "" &&
-      confirmPassword != ""
-    ) {
-      if (password == confirmPassword) {
-        return json({ message: "Cadastro realizado com sucesso!" });
-      }
-      return json({ error: "As senhas não coincidem." }, { status: 400 });
-    }
+  if (
+    name != "" &&
+    email != "" &&
+    password != "" &&
+    birth != "" &&
+    cpf != "" &&
+    confirmPassword != ""
+  ) {
+    if (password == confirmPassword) {
+      const newUser = (await registerUser(email, password)) as {
+        uid: string;
+      };
+      const uid = newUser.uid;
+      const userData = new AppData();
 
-    return json(
-      { error: "Preencha todos os campos para realizar o cadastro." },
-      { status: 400 }
-    );
-  } catch (error) {
-    return json(
-      {
-        error:
-          "Erro ao fazer o cadastro, verifique os dados digitados e tente novamente.",
-      },
-      { status: 400 }
-    );
+      const register = await userData.createUserData({
+        uid,
+        cpf,
+        name,
+        email,
+        password,
+        birth,
+      });
+
+      console.log(register);
+      return json({ message: "Cadastro realizado com sucesso!" });
+    }
+    return json({ error: "As senhas não coincidem." }, { status: 400 });
   }
+
+  return json(
+    { error: "Preencha todos os campos para realizar o cadastro." },
+    { status: 400 }
+  );
 };

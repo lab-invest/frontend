@@ -33,6 +33,9 @@ export default function Navbar({
 }) {
   const fetcher = useFetcher();
 
+  const userName = name.split(` `);
+  const newName = userName[0];
+
   const buttons = [
     { href: "/home", text: "Home" },
     { href: "/action", text: "Ações" },
@@ -68,7 +71,7 @@ export default function Navbar({
             />
           </div>
           <div>
-            <p className="text-white font-medium">{name}</p>
+            <p className="text-white font-medium">{newName}</p>
             <div className="flex text-gray underline text-xs">
               <fetcher.Form action="/logout" method="post">
                 <button type="submit">

@@ -2,7 +2,7 @@ import type { MetaFunction } from "@remix-run/node";
 import { useFetcher } from "@remix-run/react";
 import { useEffect, useState } from "react";
 import { loginAction } from "~/actions/loginAction";
-import { Box, Button, Textfield, Toast } from "~/components";
+import { Box, Button, Loading, Textfield, Toast } from "~/components";
 
 interface FetcherData {
   error?: string;
@@ -39,55 +39,58 @@ export default function Login() {
   }, [fetcher.state, fetcher.data]);
 
   return (
-    <main className="flex items-center justify-center min-h-screen bg-[url('/images/Register.png')] bg-cover bg-center">
-      <Box>
-        <h3 className="text-base font-semibold text-center">
-          Que bom te ver de novo!
-        </h3>
-        <fetcher.Form action="/login" method="post">
-          <div className="flex flex-col gap-y-4">
-            <Textfield
-              labelText="Email"
-              placeholder="Insira seu email"
-              type="email"
-              name="email"
-              isDisabled={false}
-            />
-            <Textfield
-              labelText="Senha"
-              type="password"
-              placeholder="Insira sua senha"
-              name="senha"
-              isDisabled={false}
-            />
-            <div className="flex justify-end">
-              <a
-                href="/resetPassword"
-                className="text-xs text-purple-600 hover:underline"
-              >
-                Esqueceu sua senha?
-              </a>
+    <>
+      {fetcher.state != "idle" && <Loading />}
+      <main className="flex items-center justify-center min-h-screen bg-[url('/images/Register.png')] bg-cover bg-center">
+        <Box>
+          <h3 className="text-base font-semibold text-center">
+            Que bom te ver de novo!
+          </h3>
+          <fetcher.Form action="/login" method="post">
+            <div className="flex flex-col gap-y-4">
+              <Textfield
+                labelText="Email"
+                placeholder="Insira seu email"
+                type="email"
+                name="email"
+                isDisabled={false}
+              />
+              <Textfield
+                labelText="Senha"
+                type="password"
+                placeholder="Insira sua senha"
+                name="senha"
+                isDisabled={false}
+              />
+              <div className="flex justify-end">
+                <a
+                  href="/resetPassword"
+                  className="text-xs text-purple-600 hover:underline"
+                >
+                  Esqueceu sua senha?
+                </a>
+              </div>
+              <Button text="Entrar" variant="active" type="submit" />
             </div>
-            <Button text="Entrar" variant="active" type="submit" />
-          </div>
-        </fetcher.Form>
-        <p className="text-xs font-light text-center text-gray-400">
-          Não tem uma conta?{" "}
-          <a
-            href="/register"
-            className="font-medium text-purple-600 hover:underline"
-          >
-            Se cadastre hoje
-          </a>
-        </p>
-      </Box>
+          </fetcher.Form>
+          <p className="text-xs font-light text-center text-gray-400">
+            Não tem uma conta?{" "}
+            <a
+              href="/register"
+              className="font-medium text-purple-600 hover:underline"
+            >
+              Se cadastre hoje
+            </a>
+          </p>
+        </Box>
 
-      <Toast
-        message={toastMessage}
-        show={showToast}
-        onClose={handleCloseToast}
-        variant="error"
-      />
-    </main>
+        <Toast
+          message={toastMessage}
+          show={showToast}
+          onClose={handleCloseToast}
+          variant="error"
+        />
+      </main>
+    </>
   );
 }

@@ -19,6 +19,8 @@ export const loader = simpleLoader;
 export default function Home() {
   const loaderData = useLoaderData<{ userData: UserData }>();
   const userData = loaderData.userData;
+  const wallets = userData.wallets;
+  console.log(wallets);
 
   return (
     <Layout userData={userData} className="gap-y-5">
@@ -32,10 +34,15 @@ export default function Home() {
         textPts="Todas as carteiras"
       />
       <div className="grid grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4">
-        <Wallets growth={20} id="3" name="teste" price={230} />
-        <Wallets growth={20} id="3" name="teste" price={230} />
-        <Wallets growth={20} id="3" name="teste" price={230} />
-        <Wallets growth={20} id="3" name="teste" price={230} />
+        {Object.keys(userData.wallets).map((walletName) => (
+          <Wallets
+            key={walletName}
+            name={walletName}
+            price={100} // Se você não deseja mostrar o preço para as carteiras
+            growth={2} // Ajuste conforme necessário
+            id={walletName} // Usar o nome como um identificador único
+          />
+        ))}
       </div>
     </Layout>
   );
