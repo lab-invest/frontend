@@ -41,3 +41,7 @@ export { default as PercentChangeIndicator } from "./PercentualIndicator";
 export { default as ActionBar } from "./BarActions";
 
 export { default as InfoActionDetails } from "./InfoActionDetails";
+
+export { default as ConfigPopupUnit } from "./ConfigPopupUnit";
+
+export { default as ConfigPopup } from "./ConfigPupop";

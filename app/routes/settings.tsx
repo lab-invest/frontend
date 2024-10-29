@@ -1,5 +1,5 @@
 import { MetaFunction, useLoaderData } from "@remix-run/react";
-import { ConfigOptions, Layout, ProfileImage } from "~/components";
+import { ConfigOptions, Layout, ProfileImage, ConfigPopupUnit, ConfigPopup } from "~/components";
 import { simpleLoader } from "~/loader/simpleLoader";
 import { UserData } from "~/types/userData";
 
@@ -21,31 +21,55 @@ export default function Config() {
           <ConfigOptions
             name="Nome completo"
             textButton="Alterar"
-            description="Giovanna Bregantin"
+            description={userData.name}
+            isDestructive={false}
+            hideButton={false}
+            action="Nome"
+            popupName="Alterar nome completo"
+            popupDescription="Adicione suas informações aqui. Clique em concluir quando estiver pronto."
           />
           <ConfigOptions
-            name="Password"
+            name="Senha"
             textButton="Alterar"
             description="************"
+            isDestructive={false}
+            hideButton={false}
+            action="Senha"
+            popupName="Alterar Senha"
+            popupDescription="Ao clicar em continuar, vocÊ receberá um email para alterar sua senha."
           />
           <ConfigOptions
-            name="Data Nascimento"
+            name="Data de Nascimento"
             textButton="Alterar"
-            description="20/11/2006"
+            description={userData.birth_date}
+            isDestructive={false}
+            hideButton={true}
+            action=""
+            popupName=""
+            popupDescription=""
           />
           <ConfigOptions
-            name="Reset Account"
+            name="Resetar Conta"
             textButton="Resetar"
             description="Ao fazer isso todos os dados da sua conta serão redefinidos"
+            isDestructive={false}
+            hideButton={false}
+            action="Resetar"
+            popupName="Resetar Conta"
+            popupDescription="Ao fazer isso sua conta será totalmente resetada."
           />
           <ConfigOptions
-            name="Delete Account"
+            name="Deletar Conta"
             textButton="Deletar"
-            description="Ao fazer isso sua conta será totalmente apagada"
-            isDestructive
+            description="Ao fazer isso sua conta será totalmente deletada."
+            isDestructive={true}
+            hideButton={false}
+            action="Deletar"
+            popupName="Deletar Conta"
+            popupDescription="Ao fazer isso sua conta será totalmente Deletada."
           />
         </div>
-        <ProfileImage imageUrl="https://blog.casadoprodutor.com.br/wp-content/uploads/2018/04/gatinho.jpg" />
+        <ProfileImage imageUrl={userData.user_photo} />
       </div>
     </Layout>
   );
