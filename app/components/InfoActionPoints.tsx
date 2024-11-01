@@ -4,7 +4,7 @@ import SvgRedArrow from "~/icons/arrowRedIcon";
 
 interface InfoActionPointsProps {
   textPts: string;
-  valueAction?: number;
+  valueAction: number;
   hasPercentual?: boolean;
 }
 
@@ -47,7 +47,7 @@ export default function InfoActionPoints({
     <div className="flex flex-col gap-y-1 text-center items-center">
       <p className="text-gray text-lg">{textPts}</p>
       <h1 className="text-white text-2xl sm:text-3xl lg:text-4xl font-semibold">
-        100.000pts
+        {valueAction.toFixed(2) ?? 0}
       </h1>
       {hasPercentual ? (
         <div
