@@ -21,7 +21,7 @@ export default class AppData {
 
   async getUserWallets(uid: string): Promise<JSON> {
     return this.makeRequest(
-      `/user/wallet?uuid=${encodeURIComponent(uid)}`,
+      `/user/wallets?uuid=${encodeURIComponent(uid)}`,
       "GET"
     );
   }
@@ -39,6 +39,14 @@ export default class AppData {
       `/user/balance?uuid=${encodeURIComponent(uid)}`,
       "GET"
     );
+  }
+
+  async getStokpage(): Promise<JSON> {
+    return this.makeRequest(`/bff/stock/stockpage`, "GET");
+  }
+
+  async getMarketplace(ticker: string) {
+    return this.makeRequest(`/bff/stock/marketplace?ticker=${ticker}`, "GET");
   }
 
   async deleteUser(uid: string): Promise<JSON> {

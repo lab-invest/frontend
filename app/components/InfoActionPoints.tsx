@@ -4,7 +4,8 @@ import SvgRedArrow from "~/icons/arrowRedIcon";
 
 interface InfoActionPointsProps {
   textPts: string;
-  valueAction: number;
+  pointValue?: number;
+  valueAction?: number;
   hasPercentual?: boolean;
 }
 
@@ -33,6 +34,7 @@ function verifyAction(valueAction: number) {
 export default function InfoActionPoints({
   textPts,
   valueAction,
+  pointValue,
   hasPercentual = false,
 }: InfoActionPointsProps) {
   const action = verifyAction(valueAction ?? 0);
@@ -47,7 +49,7 @@ export default function InfoActionPoints({
     <div className="flex flex-col gap-y-1 text-center items-center">
       <p className="text-gray text-lg">{textPts}</p>
       <h1 className="text-white text-2xl sm:text-3xl lg:text-4xl font-semibold">
-        {valueAction.toFixed(2) ?? 0}
+        {pointValue}
       </h1>
       {hasPercentual ? (
         <div

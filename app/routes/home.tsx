@@ -1,3 +1,5 @@
+// Home.tsx
+
 import { MetaFunction } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
 import {
@@ -7,43 +9,75 @@ import {
   Searchbar,
   Wallets,
 } from "~/components";
-import { simpleLoader } from "~/loader/simpleLoader";
+import { homeLoader } from "~/loader/homeLoader";
 import { UserData } from "~/types/userData";
 
 export const meta: MetaFunction = () => {
   return [{ title: "Home" }];
 };
 
-export const loader = simpleLoader;
+export const loader = homeLoader;
 
 export default function Home() {
   const loaderData = useLoaderData<{ userData: UserData }>();
-  const userData = loaderData.userData;
-  const wallets = userData.wallets;
-  console.log(wallets);
+
+  const { userData } = loaderData;
+  const wallets = userData.wallets.wallets;
+
+  if (!wallets || wallets.length === 0) {
+    return (
+      <Layout userData={userData} className="gap-y-5">
+        <Searchbar />
+        <BoxVariation />
+        <div className="py-5">
+          <InfoUserAndMoney
+            percentChange={userData.rentability}
+            text="Bem vindo"
+            nameUser={userData.name}
+            walletValue={userData.balance}
+            textPts="Todas as carteiras"
+          />
+        </div>
+        <p>Você não possui carteiras.</p>
+      </Layout>
+    );
+  }
+
+  const firstThreeWallets = wallets.slice(0, 3);
 
   return (
-    <Layout userData={userData} className="gap-y-5">
-      <Searchbar />
-      <BoxVariation />
-      <InfoUserAndMoney
-        percentChange={3}
-        text="Bem vindo"
-        nameUser={userData.name}
-        walletValue={userData.balance}
-        textPts="Todas as carteiras"
-      />
-      <div className="grid grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4">
-        {Object.keys(userData.wallets).map((walletName) => (
-          <Wallets
-            key={walletName}
-            name={walletName}
-            price={100} // Se você não deseja mostrar o preço para as carteiras
-            growth={2} // Ajuste conforme necessário
-            id={walletName} // Usar o nome como um identificador único
+    <>
+      <Layout userData={userData} className="gap-y-5">
+        <Searchbar />
+        <BoxVariation />
+        <div className="py-5">
+          <InfoUserAndMoney
+            percentChange={userData.rentability}
+            text="Bem vindo"
+            nameUser={userData.name}
+            walletValue={userData.balance}
+            textPts="Todas as carteiras"
           />
-        ))}
-      </div>
-    </Layout>
+        </div>
+        <div className="grid grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4">
+          {firstThreeWallets.map((wallet) => {
+            const images = Array.isArray(wallet.items)
+              ? wallet.items.map((item) => item.stock_img)
+              : [];
+
+            return (
+              <Wallets
+                key={String(wallet.id)}
+                name={String(wallet.name)}
+                price={Number(wallet.total)}
+                growth={Number(wallet.rentability)}
+                id={String(wallet.name)}
+                images={images}
+              />
+            );
+          })}
+        </div>
+      </Layout>
+    </>
   );
 }

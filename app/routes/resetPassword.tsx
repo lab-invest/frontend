@@ -55,7 +55,7 @@ export default function Login() {
                 Ao solicitar o codigo entre no seu email e redefina sua senha.
               </p>
             </div>
-            <Button text="Enviar codigo" variant="active" type="submit" />
+            <Button text="Enviar email" variant="active" type="submit" />
           </div>
         </fetcher.Form>
         <p className="text-xs font-light text-center text-gray-400">

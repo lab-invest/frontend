@@ -1,15 +1,15 @@
 import { LoaderFunction } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
-import AppData from "~/services/appData";
+import { useState } from "react";
 import {
   ActionBar,
+  ActionGraphic,
+  BuyStock,
   InfoActionPoints,
   PercentChangeIndicator,
-  ActionGraphic,
-  BuyStock
 } from "~/components";
+import AppData from "~/services/appData";
 import { StockData } from "~/types/stockData";
-import { useState } from "react";
 
 export const loader: LoaderFunction = async ({ params }: any) => {
   const userDataGet = new AppData();
@@ -25,7 +25,7 @@ export const loader: LoaderFunction = async ({ params }: any) => {
 
 export default function SpecificWallet() {
   const { stockData } = useLoaderData<{ stockData: StockData }>();
-  const [showBuyPopup, setShowBuyPopup] = useState(false);
+  // const [showBuyPopup, setShowBuyPopup] = useState(false);
   const [showBuyStock, setShowBuyStock] = useState(false);
 
   const handleBuyClick = () => setShowBuyStock(true);
@@ -33,7 +33,10 @@ export default function SpecificWallet() {
 
   return (
     <div className="flex flex-col gap-6">
-      <InfoActionPoints valueAction={stockData?.stock_cotation || 0} textPts="P3TR4" />
+      <InfoActionPoints
+        valueAction={stockData?.stock_cotation || 0}
+        textPts="P3TR4"
+      />
       <div className="flex flex-col">
         <div className="self-end">
           <PercentChangeIndicator percentChange={stockData?.rentability || 0} />
@@ -51,7 +54,10 @@ export default function SpecificWallet() {
         volumeAction={stockData?.aditional_data.Volume}
       />
       <div className="flex h-10 gap-x-10 text-white">
-        <button className="bg-green-700 rounded w-full" onClick={handleBuyClick}>
+        <button
+          className="bg-green-700 rounded w-full"
+          onClick={handleBuyClick}
+        >
           Comprar
         </button>
         <button className="bg-red-700 rounded w-full">Vender</button>
@@ -59,13 +65,12 @@ export default function SpecificWallet() {
       {showBuyStock && (
         <BuyStock
           availableBalance={100000}
-          wallets={['1', '2', '3', '4', '5', '6']}
+          wallets={["1", "2", "3", "4", "5", "6"]}
           onClose={handleCloseBuyStock}
           ticket="PETR4"
           stockCotation={stockData?.stock_cotation}
         />
       )}
-
     </div>
   );
 }
