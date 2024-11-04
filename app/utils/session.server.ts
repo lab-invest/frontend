@@ -1,5 +1,9 @@
 import { createCookieSessionStorage, redirect } from "@remix-run/node";
-import { signInWithEmailAndPassword } from "firebase/auth";
+import {
+  createUserWithEmailAndPassword,
+  sendPasswordResetEmail,
+  signInWithEmailAndPassword,
+} from "firebase/auth";
 import { auth } from "~/config";
 
 import type { User } from "~/types/user";
@@ -14,6 +18,19 @@ export const sessionStorage = createCookieSessionStorage({
     secure: process.env.NODE_ENV === "production",
   },
 });
+
+export async function registerUser(email: string, password: string) {
+  try {
+    const userCredential = await createUserWithEmailAndPassword(
+      auth,
+      email,
+      password
+    );
+    return userCredential.user;
+  } catch (error) {
+    return error;
+  }
+}
 
 export async function getSession(request: Request) {
   return sessionStorage.getSession(request.headers.get("Cookie"));
@@ -60,8 +77,12 @@ export async function createUserSession(
 export async function getUser(request: Request) {
   const session = await getSession(request);
   const currentUser = session.get("currentUser") as User;
-  console.log("Usuário atual recuperado da sessão:", currentUser.uid);
   return currentUser;
+}
+
+export async function resetPassowrd(email: string) {
+  await sendPasswordResetEmail(auth, email);
+  return { success: true };
 }
 
 export async function ensureAuthenticated(request: Request) {

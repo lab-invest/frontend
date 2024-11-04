@@ -1,5 +1,5 @@
 interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
-  type: "text" | "email" | "password";
+  type: "text" | "email" | "password" | "tel" | "date";
   name: string;
   inputRef?: React.Ref<HTMLInputElement>;
   className?: string;

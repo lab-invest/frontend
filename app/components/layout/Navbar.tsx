@@ -24,8 +24,17 @@ function ButtonsNavbar({ href, text }: ButtonsNavbarProps) {
   );
 }
 
-export default function Navbar() {
+export default function Navbar({
+  name,
+  user_photo,
+}: {
+  name: string;
+  user_photo: string;
+}) {
   const fetcher = useFetcher();
+
+  const userName = name.split(` `);
+  const newName = userName[0];
 
   const buttons = [
     { href: "/home", text: "Home" },
@@ -52,13 +61,17 @@ export default function Navbar() {
         <div className="flex">
           <div className="w-10 h-10 mr-2 rounded-full border">
             <img
-              src={"https://i.ytimg.com/vi/0aSyKFQ7KAo/maxresdefault.jpg"}
+              src={
+                user_photo
+                  ? "https://i.ytimg.com/vi/0aSyKFQ7KAo/maxresdefault.jpg"
+                  : user_photo
+              }
               alt="teste"
               className="w-full h-full rounded-full"
             />
           </div>
           <div>
-            <p className="text-white font-medium">{`smoll`}</p>
+            <p className="text-white font-medium">{newName}</p>
             <div className="flex text-gray underline text-xs">
               <fetcher.Form action="/logout" method="post">
                 <button type="submit">

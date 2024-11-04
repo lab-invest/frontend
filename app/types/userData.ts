@@ -5,16 +5,19 @@ interface Wallet {
 }
 
 export interface UserData {
-  uid: string;
+  uid: string; // Ajuste para uuid
   cpf: string;
   name: string;
   email: string;
   password: string;
-  experience: string;
+  experience?: string; // Tornar opcional, caso não venha no retorno
   birth_date: string;
   balance: number;
   wallets: {
-    [ticker: string]: Wallet;
+    [category: string]: {
+      [ticker: string]: Wallet;
+    };
   };
+  rentability: number;
   user_photo: string;
 }
