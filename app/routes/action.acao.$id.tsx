@@ -5,9 +5,11 @@ import {
   ActionBar,
   InfoActionPoints,
   PercentChangeIndicator,
-  ActionGraphic    
+  ActionGraphic,
+  BuyStock
 } from "~/components";
 import { StockData } from "~/types/stockData";
+import { useState } from "react";
 
 export const loader: LoaderFunction = async ({ params }: any) => {
   const userDataGet = new AppData();
@@ -23,7 +25,11 @@ export const loader: LoaderFunction = async ({ params }: any) => {
 
 export default function SpecificWallet() {
   const { stockData } = useLoaderData<{ stockData: StockData }>();
-  console.log(stockData?.rentability);
+  const [showBuyPopup, setShowBuyPopup] = useState(false);
+  const [showBuyStock, setShowBuyStock] = useState(false);
+
+  const handleBuyClick = () => setShowBuyStock(true);
+  const handleCloseBuyStock = () => setShowBuyStock(false);
 
   return (
     <div className="flex flex-col gap-6">
@@ -33,21 +39,37 @@ export default function SpecificWallet() {
           <PercentChangeIndicator percentChange={stockData?.rentability || 0} />
         </div>
         <div className="flex items-center justify-center min-h-80">
-          <ActionGraphic historical_data={stockData?.historical_data}  />
+          <ActionGraphic historical_data={stockData?.historical_data} />
         </div>
       </div>
-      <ActionBar 
-      nameAction="P3TR4"
-      openAction={stockData?.aditional_data.Open}
-      closeAction={stockData?.aditional_data.Close}
-      highAction={stockData?.aditional_data.High}
-      lowAction={stockData?.aditional_data.Low}
-      volumeAction={stockData?.aditional_data.Volume}
-       />
+      <ActionBar
+        nameAction="P3TR4"
+        openAction={stockData?.aditional_data.Open}
+        closeAction={stockData?.aditional_data.Close}
+        highAction={stockData?.aditional_data.High}
+        lowAction={stockData?.aditional_data.Low}
+        volumeAction={stockData?.aditional_data.Volume}
+      />
       <div className="flex h-10 gap-x-10 text-white">
-        <button className="bg-green-700 rounded w-full">Comprar</button>
+        <button className="bg-green-700 rounded w-full" onClick={handleBuyClick}>
+          Comprar
+        </button>
         <button className="bg-red-700 rounded w-full">Vender</button>
       </div>
+      {showBuyStock && (
+        <div className="fixed inset-0 flex items-center justify-center bg-white bg-opacity-50 z-50">
+          <div className="bg-secondary p-4 rounded-lg w-4/12 h-3/4 relative">
+            <BuyStock
+              availableBalance={100000}
+              wallets={['1', '2', '3', '4', '5', '6']}
+              onClose={handleCloseBuyStock}
+              ticket="PETR4"
+              stockCotation={stockData?.stock_cotation}
+            />
+          </div>
+        </div>
+      )}
+
     </div>
   );
 }

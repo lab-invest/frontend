@@ -47,3 +47,5 @@ export { default as ConfigPopupUnit } from "./ConfigPopupUnit";
 export { default as ConfigPopup } from "./ConfigPupop";
 
 export { default as ActionGraphic } from "./ActionGraphic";
+
+export { default as BuyStock } from "./BuyStock";
