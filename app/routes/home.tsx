@@ -1,5 +1,3 @@
-// Home.tsx
-
 import { MetaFunction } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
 import {
@@ -38,7 +36,7 @@ export default function Home() {
             textPts="Todas as carteiras"
           />
         </div>
-        <p>Você não possui carteiras.</p>
+        <p className="text-center text-white">Você não possui carteiras.</p>
       </Layout>
     );
   }

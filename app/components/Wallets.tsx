@@ -1,5 +1,3 @@
-// Wallets.tsx
-
 import { useNavigate } from "react-router-dom";
 import SvgMore from "~/icons/more";
 import Variation from "./variation";
