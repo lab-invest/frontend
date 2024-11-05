@@ -1,8 +1,13 @@
 interface ActionbarProps {
   nameAction: string;
+  openAction: number;
+  highAction: number;
+  lowAction: number;
+  closeAction: number;
+  volumeAction: number;
 }
 
-export default function ActionBar({ nameAction }: ActionbarProps) {
+export default function ActionBar({ nameAction, openAction, highAction, lowAction, closeAction, volumeAction }: ActionbarProps) {
   return (
     <div className="bg-secondary p-3 flex rounded-sm">
       <div className="flex items-center mr-6">
@@ -21,27 +26,27 @@ export default function ActionBar({ nameAction }: ActionbarProps) {
         <div className="flex items-center text-gray">
           <p>Open</p>
           <div className="w-10 mr-1 ml-1 h-0.5 bg-third rounded-xl"></div>
-          <p>R$ 31,82</p>
+          <p>R$ {openAction.toFixed(2)}</p>
         </div>
         <div className="flex items-center text-gray">
           <p>High</p>
           <div className="w-10 mr-1 ml-1 h-0.5 bg-third rounded-xl"></div>
-          <p>R$ 31,82</p>
+          <p>R$ {highAction.toFixed(2)}</p>
         </div>
         <div className="flex items-center text-gray">
           <p>Close</p>
           <div className="w-10 mr-1 ml-1 h-0.5 bg-third rounded-xl"></div>
-          <p>R$ 31,82</p>
+          <p>R$ {closeAction.toFixed(2)}</p>
         </div>
         <div className="flex items-center text-gray">
           <p>Low</p>
           <div className="w-10 mr-1 ml-1 h-0.5 bg-third rounded-xl"></div>
-          <p>R$ 31,82</p>
+          <p>R$ {lowAction.toFixed(2)}</p>
         </div>
         <div className="flex items-center text-gray">
           <p>Volume</p>
           <div className="w-10 mr-1 ml-1 h-0.5 bg-third rounded-xl"></div>
-          <p>R$ 3423423</p>
+          <p>R$ {volumeAction.toFixed(2)}</p>
         </div>
       </div>
     </div>

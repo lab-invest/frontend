@@ -26,6 +26,14 @@ export default class AppData {
     );
   }
 
+  async getStockInfos(uid: string): Promise<JSON> {
+    return this.makeRequest(
+      `/bff/stock/marketplace?ticker=${encodeURIComponent(uid)}`,
+      "GET"
+    );
+  }
+
+
   async getUserBalance(uid: string): Promise<JSON> {
     return this.makeRequest(
       `/user/balance?uuid=${encodeURIComponent(uid)}`,
