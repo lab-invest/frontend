@@ -1,3 +1,4 @@
+import { json, LoaderFunctionArgs, redirect } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
 import { useState } from "react";
 import {
@@ -7,19 +8,50 @@ import {
   InfoActionPoints,
   PercentChangeIndicator,
 } from "~/components";
+import AppData from "~/services/appData";
 import { StockData } from "~/types/stockData";
+import { getSession, getUser, sessionStorage } from "~/utils/session.server";
 
-// export const loader: LoaderFunction = async ({ params }: any) => {
-//   const userDataGet = new AppData();
+export const loader = async ({ request }: LoaderFunctionArgs) => {
+  const user = await getUser(request);
 
-//   try {
-//     const stockData = await userDataGet.getStockInfos("PETR4.SA");
-//     return { stockData };
-//   } catch (error) {
-//     console.error("Erro ao buscar dados da ação:", error);
-//     throw new Response("Erro ao buscar dados da ação", { status: 500 });
-//   }
-// };
+  if (!user) {
+    return redirect("/login");
+  }
+
+  const session = await getSession(request);
+  const apiGet = new AppData();
+
+  const url = new URL(request.url);
+  const pathname = url.pathname;
+  const segments = pathname.split("/");
+  const actionName = segments[segments.length - 1];
+
+  console.log("walletName extraído:", actionName);
+
+  if (!actionName) {
+    throw new Response("Nome da carteira não fornecido", { status: 400 });
+  }
+
+  try {
+    const stockData = await apiGet.getStockInfos(actionName);
+    console.log(stockData);
+
+    return json(
+      { stockData },
+      {
+        headers: {
+          "Set-Cookie": await sessionStorage.commitSession(session),
+        },
+      }
+    );
+  } catch (error) {
+    console.error("Erro ao buscar dados do usuário ou carteiras:", error);
+    throw new Response("Erro ao buscar dados do usuário ou carteiras", {
+      status: 500,
+    });
+  }
+};
 
 export default function SpecificWallet() {
   const { stockData } = useLoaderData<{ stockData: StockData }>();
