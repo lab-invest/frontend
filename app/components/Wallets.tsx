@@ -7,6 +7,7 @@ interface InvestmentCardProps {
   price: number;
   growth: number;
   id: string;
+  images: string[];
 }
 
 export default function Wallets({
@@ -14,6 +15,7 @@ export default function Wallets({
   price,
   growth,
   id,
+  images,
 }: InvestmentCardProps) {
   const navigate = useNavigate();
 
@@ -26,6 +28,12 @@ export default function Wallets({
       handleClick();
     }
   };
+
+  const TOTAL_SQUARES = 7;
+  const imagesToShow = images || [];
+  const imagesDisplayed = imagesToShow.slice(0, TOTAL_SQUARES - 1);
+  const placeholdersCount = TOTAL_SQUARES - imagesDisplayed.length - 1;
+  const placeholders = Array.from({ length: placeholdersCount });
 
   return (
     <div className="flex flex-col min-h-44 items-center">
@@ -42,9 +50,22 @@ export default function Wallets({
         <h3 className="text-grayt">{name}</h3>
         <p>R$ {price?.toFixed(2)}</p>
         <div className="flex justify-between mt-4 pr-2">
-          {Array.from({ length: 6 }, (_, i) => (
-            <div key={i} className="bg-third w-6 h-6 rounded-sm "></div>
+          {imagesDisplayed.map((imageUrl, index) => (
+            <img
+              key={`img-${index}`}
+              src={imageUrl}
+              alt=""
+              className="w-6 h-6 rounded-sm"
+            />
           ))}
+
+          {placeholders.map((_, index) => (
+            <div
+              key={`placeholder-${index}`}
+              className="bg-third w-6 h-6 rounded-sm"
+            ></div>
+          ))}
+
           <div className="bg-third w-6 h-6 rounded-sm flex items-center justify-center">
             <SvgMore />
           </div>

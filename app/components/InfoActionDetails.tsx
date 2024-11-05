@@ -1,16 +1,25 @@
 import Variation from "./variation";
 
-export default function InfoActionDetails() {
+export type InfoActionDetailsProps = {
+  nameAction: string;
+  valueAction: number;
+  price: number;
+  actionImage: string;
+};
+
+export default function InfoActionDetails({
+  nameAction,
+  valueAction,
+  price,
+  actionImage,
+}: InfoActionDetailsProps) {
   return (
     <div className="flex justify-between px-3 text-white">
-      <p>+ R$ xx.xx</p>
+      <p>+ R$ {price}</p>
       <div className="flex gap-x-4">
-        <Variation nameAction="P3TR4" valueAction={29} />
+        <Variation nameAction={nameAction} valueAction={valueAction} />
         <div className="w-7 h-full bg-red-600 rounded">
-          <img
-            src="https://s3-symbol-logo.tradingview.com/brasileiro-petrobras--600.png"
-            alt=""
-          />
+          <img src={actionImage} alt="" />
         </div>
       </div>
     </div>

@@ -10,7 +10,6 @@ interface InfoUserAndMoneyProps {
   percentChange: number; // Novo prop para o percentual de mudança
 }
 
-// Função para verificar a ação e definir cores e ícone
 function verifyAction(valueAction: number) {
   if (valueAction > 0) {
     return {
