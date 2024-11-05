@@ -33,6 +33,12 @@ export default class AppData {
     );
   }
 
+  async getWalletByName(uid: string, walletName: string): Promise<JSON> {
+    return this.makeRequest(
+      `/user/wallet?uuid=${encodeURIComponent(uid)}&wallet=${walletName}`,
+      "GET"
+    );
+  }
 
   async getUserBalance(uid: string): Promise<JSON> {
     return this.makeRequest(

@@ -1,5 +1,5 @@
 import { MetaFunction, useLoaderData } from "@remix-run/react";
-import { ConfigOptions, Layout, ProfileImage, ConfigPopupUnit, ConfigPopup } from "~/components";
+import { ConfigOptions, Layout, ProfileImage } from "~/components";
 import { simpleLoader } from "~/loader/simpleLoader";
 import { UserData } from "~/types/userData";
 
