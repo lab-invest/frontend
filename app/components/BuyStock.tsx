@@ -26,9 +26,9 @@ export default function BuyStock({
 
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-secondary bg-opacity-50">
-      <div className="bg-gray-800 p-8 rounded-lg w-2/6 text-white">
-        <div className="flex justify-between items-center mb-4">
-            <div className="flex">
+      <div className="bg-gray-800 rounded-lg w-2/6 text-white">
+        <div className="flex justify-between items-center">
+            <div className="flex items-center justify-center">
                 <div className="w-6 mr-4 rounded-sm">
                     <img
                         src="https://s3-symbol-logo.tradingview.com/brasileiro-petrobras--600.png"

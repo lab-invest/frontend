@@ -57,17 +57,13 @@ export default function SpecificWallet() {
         <button className="bg-red-700 rounded w-full">Vender</button>
       </div>
       {showBuyStock && (
-        <div className="fixed inset-0 flex items-center justify-center bg-white bg-opacity-50 z-50">
-          <div className="bg-secondary p-4 rounded-lg w-4/12 h-3/4 relative">
-            <BuyStock
-              availableBalance={100000}
-              wallets={['1', '2', '3', '4', '5', '6']}
-              onClose={handleCloseBuyStock}
-              ticket="PETR4"
-              stockCotation={stockData?.stock_cotation}
-            />
-          </div>
-        </div>
+        <BuyStock
+          availableBalance={100000}
+          wallets={['1', '2', '3', '4', '5', '6']}
+          onClose={handleCloseBuyStock}
+          ticket="PETR4"
+          stockCotation={stockData?.stock_cotation}
+        />
       )}
 
     </div>
