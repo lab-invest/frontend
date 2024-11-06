@@ -1,40 +1,79 @@
-# Welcome to Remix!
 
-- 📖 [Remix docs](https://remix.run/docs)
+# InvestLab
 
-## Development
+## Sumário
 
-Run the dev server:
+- [Requisitos](#requisitos)
+- [Instalação](#instalação)
+- [Rodando o projeto](#rodando-o-projeto)
+- [Scripts Disponíveis](#scripts-disponíveis)
+- [Estrutura de Pastas](#estrutura-de-pastas)
+- [Tecnologias Utilizadas](#tecnologias-utilizadas)
 
-```shellscript
+## Requisitos
+
+Antes de iniciar, é necessário ter as seguintes ferramentas instaladas:
+
+- [Node.js](https://nodejs.org/) (versão recomendada: 14.x ou superior)
+- [Git](https://git-scm.com/) (para clonar o repositório)
+
+## Instalação
+
+1. **Clone o repositório:**
+
+   ```bash
+   git clone https://github.com/seuusuario/seuprojeto.git
+   ```
+
+2. **Entre na pasta do projeto:**
+
+   ```bash
+   cd frontend
+   ```
+
+3. **Instale as dependências:**
+
+   ```bash
+   npm install
+   ```
+
+## Rodando o Projeto
+
+Após instalar as dependências, você pode rodar o projeto localmente:
+
+```bash
 npm run dev
 ```
 
-## Deployment
+- O projeto estará disponível em `http://localhost:3000`.
+- O navegador deve abrir automaticamente. Caso contrário, acesse o endereço manualmente.
 
-First, build your app for production:
+## Scripts Disponíveis
 
-```sh
-npm run build
+No projeto, você pode executar alguns scripts adicionais:
+
+- **`npm run dev`**: Inicia o projeto em modo de desenvolvimento.
+- **`npm run build`**: Compila o projeto para produção, gerando uma pasta `build` com os arquivos otimizados.
+
+## Estrutura de Pastas
+
+Abaixo está uma estrutura simplificada do projeto:
+
+```
+seuprojeto/
+├── public/              # Arquivos públicos, como index.html
+├── app/                 # Código-fonte principal
+│   ├── icons/          # Icones do aplicativo estáticos
+│   ├── components/      # Componentes reutilizáveis
+│   ├── routes/           # Páginas principais do projeto
+│   ├── services/        # Integrações com APIs e outras funções de serviço
+│   └── root.js           # Componente raiz
+├── .gitignore           # Arquivos a serem ignorados pelo Git
+├── package.json         # Dependências e scripts do projeto
+└── README.md            # Documentação do projeto
 ```
 
-Then run the app in production mode:
+## Tecnologias Utilizadas
 
-```sh
-npm start
-```
-
-Now you'll need to pick a host to deploy it to.
-
-### DIY
-
-If you're familiar with deploying Node applications, the built-in Remix app server is production-ready.
-
-Make sure to deploy the output of `npm run build`
-
-- `build/server`
-- `build/client`
-
-## Styling
-
-This template comes with [Tailwind CSS](https://tailwindcss.com/) already configured for a simple default starting experience. You can use whatever css framework you prefer. See the [Vite docs on css](https://vitejs.dev/guide/features.html#css) for more information.
+- **React Remix**: Biblioteca principal para a construção da interface.
+- **Tailwind CSS**: Estilização dos componentes.
