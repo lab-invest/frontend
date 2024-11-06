@@ -14,7 +14,7 @@
 
 Antes de iniciar, é necessário ter as seguintes ferramentas instaladas:
 
-- [Node.js](https://nodejs.org/) (versão recomendada: 14.x ou superior)
+- [Node.js](https://nodejs.org/) (versão recomendada: 20 ou superior)
 - [Git](https://git-scm.com/) (para clonar o repositório)
 
 ## Instalação
@@ -61,7 +61,7 @@ Abaixo está uma estrutura simplificada do projeto:
 
 ```
 seuprojeto/
-├── public/              # Arquivos públicos, como index.html
+├── public/              # Arquivos públicos
 ├── app/                 # Código-fonte principal
 │   ├── icons/          # Icones do aplicativo estáticos
 │   ├── components/      # Componentes reutilizáveis
@@ -76,4 +76,6 @@ seuprojeto/
 ## Tecnologias Utilizadas
 
 - **React Remix**: Biblioteca principal para a construção da interface.
-- **Tailwind CSS**: Estilização dos componentes.
+- **Apex Chart**: Biblioteca de gráficos utilizada na aplicação.
+- **Shadcn**: Biblioteca em que baseamos nossos componentes.
+- **Tailwind CSS**: Biblioteca de estilização utilizada na aplicações.
