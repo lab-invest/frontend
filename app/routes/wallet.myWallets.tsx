@@ -1,12 +1,10 @@
-import { useLoaderData } from "@remix-run/react";
+import { json, redirect, useLoaderData } from "@remix-run/react";
 import { InfoUserAndMoney, Wallets } from "~/components";
 import WalletsGraphic from "~/components/WalletsGraphic";
-import { homeLoader } from "~/loader/homeLoader";
-import { UserData } from "~/types/userData";
-import { getSession, getUser, sessionStorage } from "~/utils/session.server";
-import { json, redirect } from "@remix-run/node";
 import AppData from "~/services/appData";
+import { UserData } from "~/types/userData";
 import { WalletData } from "~/types/walletComparasion";
+import { getSession, getUser, sessionStorage } from "~/utils/session.server";
 
 export const loader = async ({ request }: { request: Request }) => {
   const user = await getUser(request);
@@ -42,7 +40,10 @@ export const loader = async ({ request }: { request: Request }) => {
 };
 
 export default function MyWallets() {
-  const loaderData = useLoaderData<{ userData: UserData; walletComparision: WalletData[] }>();
+  const loaderData = useLoaderData<{
+    userData: UserData;
+    walletComparision: WalletData[];
+  }>();
   const { userData, walletComparision } = loaderData;
 
   const wallets = userData.wallets.wallets;

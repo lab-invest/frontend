@@ -1,4 +1,3 @@
-// Importações necessárias
 import { useLoaderData } from "@remix-run/react";
 import {
   BoxVariation,
@@ -59,7 +58,7 @@ export default function SearchAction() {
           <SpecActions
             key={action.nome}
             actionName={action.nome}
-            valueAction={action.preco_atual}
+            valueAction={action.rentabilidade}
             actionImage={action.imagem}
             open={action.abertura}
             close={action.fechamento}

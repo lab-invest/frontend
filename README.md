@@ -1,4 +1,3 @@
-
 # InvestLab
 
 ## Sumário

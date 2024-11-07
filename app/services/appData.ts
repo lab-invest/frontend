@@ -27,13 +27,6 @@ export default class AppData {
     );
   }
 
-  async patchCleanUser(uid: string): Promise<JSON> {
-    return this.makeRequest(
-      `/cleanUser?uuid=${encodeURIComponent(uid)}`,
-      "PATCH"
-    );
-  }
-
   async getUserData(uid: string): Promise<JSON> {
     return this.makeRequest(`/user?uuid=${encodeURIComponent(uid)}`, "GET");
   }
@@ -93,6 +86,20 @@ export default class AppData {
 
   async getMarketplace(ticker: string) {
     return this.makeRequest(`/bff/stock/marketplace?ticker=${ticker}`, "GET");
+  }
+
+  async buyStock(
+    uid: string,
+    wallet: string,
+    ticker: string,
+    quantity: number,
+    average_price: number
+  ): Promise<JSON> {
+    return this.makeRequest(`/stock?uuid=${uid}&wallet=${wallet}`, "PATCH", {
+      ticker,
+      quantity,
+      average_price,
+    });
   }
 
   async deleteUser(uid: string): Promise<JSON> {

@@ -11,4 +11,6 @@ export interface StockData {
     [key: string]: number;
   };
   stock_cotation: number;
+  company_name: string;
+  img: string;
 }

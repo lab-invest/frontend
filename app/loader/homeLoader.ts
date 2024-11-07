@@ -14,16 +14,11 @@ export const homeLoader = async ({ request }: { request: Request }) => {
   const apiGet = new AppData();
 
   try {
-    // const [userData, wallets] = await Promise.all([
-    //   apiGet.getUserData(user.uid),
-    //   apiGet.getUserWallets(user.uid),
-    // ]);
     const userData = await apiGet.getUserData(user.uid);
 
     return json(
       {
         userData,
-        // wallets,
       },
       {
         headers: {

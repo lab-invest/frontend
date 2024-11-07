@@ -47,7 +47,10 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
     )) as unknown as WalletData;
     const tickers = walletData.items.map((item) => item.ticker);
     const stocksComparison = await apiGet.getStockComparison(tickers);
-    const walletAside = await apiGet.getWalletComparisonAside(user.uid, walletName);
+    const walletAside = await apiGet.getWalletComparisonAside(
+      user.uid,
+      walletName
+    );
 
     return json(
       {
@@ -71,7 +74,10 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
 
 export default function SpecificWallet() {
   const { walletData } = useLoaderData<LoaderData>();
-  const loaderData = useLoaderData<{ stocksComparison: StockData, walletAside: WalletAside }>();
+  const loaderData = useLoaderData<{
+    stocksComparison: StockData;
+    walletAside: WalletAside;
+  }>();
   const { stocksComparison, walletAside } = loaderData;
 
   if (!walletData) {
@@ -79,9 +85,9 @@ export default function SpecificWallet() {
   }
 
   const stockPrices: { [key: string]: [number, number] } = {};
-  
-  walletAside.stocks.forEach(stockArray => {
-    stockArray.forEach(stockEntry => {
+
+  walletAside.stocks.forEach((stockArray) => {
+    stockArray.forEach((stockEntry) => {
       const symbol = Object.keys(stockEntry)[0];
       const priceAndValue = stockEntry[symbol];
       stockPrices[symbol] = [priceAndValue[0], priceAndValue[1]];
@@ -94,7 +100,9 @@ export default function SpecificWallet() {
         <div className="flex flex-col gap-y-6">
           {walletData.items && walletData.items.length > 0 ? (
             walletData.items.map((item, index) => {
-              const [currentPrice, valueAction] = stockPrices[item.ticker] || [0, 0];
+              const [currentPrice, valueAction] = stockPrices[item.ticker] || [
+                0, 0,
+              ];
 
               return (
                 <InfoActionDetails
@@ -113,7 +121,8 @@ export default function SpecificWallet() {
         <div className="flex flex-col text-white items-center">
           <h1 className="text-lg">{walletData.name}</h1>
           <p className="text-2xl font-semibold">
-            R${walletData.total.toLocaleString("pt-BR", {
+            R$
+            {walletData.total.toLocaleString("pt-BR", {
               minimumFractionDigits: 2,
             })}
           </p>
