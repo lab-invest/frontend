@@ -12,7 +12,7 @@ export default class AppData {
   private readonly baseUrl: string;
 
   constructor(baseUrl: string = "") {
-    this.baseUrl = baseUrl || "https://investlab-back.onrender.com";
+    this.baseUrl = baseUrl || "http://ec2-34-226-163-14.compute-1.amazonaws.com:8080";
   }
 
   async getUserData(uid: string): Promise<JSON> {
@@ -29,6 +29,13 @@ export default class AppData {
   async getStockInfos(uid: string): Promise<JSON> {
     return this.makeRequest(
       `/bff/stock/marketplace?ticker=${encodeURIComponent(uid)}`,
+      "GET"
+    );
+  }
+
+  async getWalletComparison(uid: string): Promise<JSON> {
+    return this.makeRequest(
+      `/bff/wallet/comparison?uuid=${encodeURIComponent(uid)}`,
       "GET"
     );
   }

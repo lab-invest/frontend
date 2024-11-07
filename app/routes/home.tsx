@@ -20,7 +20,7 @@ export default function Home() {
   const loaderData = useLoaderData<{ userData: UserData }>();
 
   const { userData } = loaderData;
-  const wallets = userData.wallets.wallets;
+  const wallets = userData.wallets?.wallets || [];
 
   if (!wallets || wallets.length === 0) {
     return (
