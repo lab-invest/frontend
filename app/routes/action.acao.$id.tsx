@@ -66,6 +66,13 @@ export const action: ActionFunction = async ({ request }) => {
   const quantity = Number(formData.get("quantity"));
   const average_price = Number(formData.get("availableBalance"));
 
+  const url = new URL(request.url);
+  const pathname = url.pathname;
+  const segments = pathname.split("/");
+  const actionName = segments[segments.length - 1];
+  const teste = actionName.split(".");
+  const ticker = teste[0];
+
   console.log("formData", formData);
 
   let walletName: string | null = null;
@@ -73,8 +80,6 @@ export const action: ActionFunction = async ({ request }) => {
   if (newWalletName && !selectedWallet) {
     walletName = newWalletName;
   }
-
-  const ticker = "PETR4";
 
   try {
     const user = await getUser(request);
@@ -88,7 +93,7 @@ export const action: ActionFunction = async ({ request }) => {
       average_price
     );
     return json(
-      { buyAction, walletName },
+      { buyAction, walletName, success: true },
       {
         headers: {
           "Set-Cookie": await sessionStorage.commitSession(session),

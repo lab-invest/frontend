@@ -1,33 +1,54 @@
 import { useEffect, useState } from "react";
 import Variation from "./variation";
 
-function addVariations(width: number) {
-  const variations = [];
-  if (width > 1400) {
-    for (let i = 0; i < 8; i++) {
-      variations.push(
-        <Variation key={i} nameAction="PETR4" valueAction={320} />
-      );
-    }
-  } else if (width > 1200) {
-    for (let i = 0; i < 7; i++) {
-      variations.push(
-        <Variation key={i} nameAction="PETR4" valueAction={320} />
-      );
-    }
-  } else {
-    for (let i = 0; i < 6; i++) {
-      variations.push(
-        <Variation key={i} nameAction="PETR4" valueAction={320} />
-      );
-    }
-  }
-  return variations;
+// Interface para representar cada ação
+interface ActionItem {
+  nome: string;
+  rentabilidade: number;
+  imagem: string;
+  max: number;
+  minimo: number;
+  volume: number;
+  abertura: number;
+  fechamento: number;
+  preco_atual: number;
 }
 
-export default function BoxVariation() {
-  const [isClient, setIsClient] = useState(false);
-  const [windowWidth, setWindowWidth] = useState(0);
+// Interface para representar os dados adicionais recebidos pelo componente
+interface AdditionalData {
+  items: ActionItem[];
+}
+
+// Props para o componente BoxVariation
+interface BoxVariationProps {
+  additionalData: AdditionalData;
+}
+
+// Função para renderizar as variações com base na largura da janela e na quantidade de ações
+function addVariations(actions: ActionItem[], width: number) {
+  let numVariations = 6; // Número padrão de ações a serem exibidas
+
+  if (width > 1400) {
+    numVariations = 8;
+  } else if (width > 1200) {
+    numVariations = 7;
+  }
+
+  // Seleciona o número adequado de ações com base na largura da janela
+  const displayedActions = actions.slice(0, numVariations);
+
+  return displayedActions.map((action, index) => (
+    <Variation
+      key={index}
+      nameAction={action.nome}
+      valueAction={action.rentabilidade}
+    />
+  ));
+}
+
+export default function BoxVariation({ additionalData }: BoxVariationProps) {
+  const [isClient, setIsClient] = useState<boolean>(false);
+  const [windowWidth, setWindowWidth] = useState<number>(0);
 
   useEffect(() => {
     setIsClient(true);
@@ -36,7 +57,7 @@ export default function BoxVariation() {
     };
 
     window.addEventListener("resize", handleResize);
-    handleResize();
+    handleResize(); // Define a largura inicial
     return () => {
       window.removeEventListener("resize", handleResize);
     };
@@ -46,7 +67,14 @@ export default function BoxVariation() {
     return null;
   }
 
+  // Verifica se os dados adicionais estão disponíveis
+  if (!additionalData || !additionalData.items) {
+    return <p>Carregando dados...</p>;
+  }
+
   return (
-    <div className="flex justify-between">{addVariations(windowWidth)}</div>
+    <div className="flex justify-between">
+      {addVariations(additionalData.items, windowWidth)}
+    </div>
   );
 }

@@ -15,10 +15,12 @@ export const homeLoader = async ({ request }: { request: Request }) => {
 
   try {
     const userData = await apiGet.getUserData(user.uid);
+    const stockpage = await apiGet.getStokpage();
 
     return json(
       {
         userData,
+        stockpage,
       },
       {
         headers: {
