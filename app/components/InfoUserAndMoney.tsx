@@ -46,7 +46,7 @@ export default function InfoUserAndMoney({
   return (
     <div className="flex w-full justify-between">
       <div className="text-left">
-        <p className="text-gray text-xs sm:text-sm lg:text-lg">{text},</p>
+        <p className="text-gray text-xs sm:text-sm lg:text-lg">{text}</p>
         <h1 className="text-white text-xl sm:text-2xl lg:text-3xl font-semibold">
           {nameUser}
         </h1>

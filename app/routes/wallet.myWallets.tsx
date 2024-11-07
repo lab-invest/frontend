@@ -1,42 +1,32 @@
 import { useLoaderData } from "@remix-run/react";
 import { InfoUserAndMoney, Wallets } from "~/components";
+import WalletsGraphic from "~/components/WalletsGraphic";
 import { homeLoader } from "~/loader/homeLoader";
 import { UserData } from "~/types/userData";
-import AppData from "~/services/appData";
-import { json, LoaderFunctionArgs, redirect } from "@remix-run/node";
 import { getSession, getUser, sessionStorage } from "~/utils/session.server";
+import { json, redirect } from "@remix-run/node";
+import AppData from "~/services/appData";
 import { WalletData } from "~/types/walletComparasion";
-import { useEffect, useState } from "react";
-import { format, parseISO } from "date-fns";
-import { ptBR } from "date-fns/locale"; // Importar locale em português
 
-export const loader = async ({ request }: LoaderFunctionArgs) => {
+export const loader = async ({ request }: { request: Request }) => {
   const user = await getUser(request);
 
   if (!user) {
     return redirect("/login");
   }
 
-  const session = await getSession(request);
   const apiGet = new AppData();
 
-  const url = new URL(request.url);
-  const pathname = url.pathname;
-  const segments = pathname.split("/");
-  const actionName = segments[segments.length - 1];
-
-  console.log("walletName extraído:", actionName);
-
-  if (!actionName) {
-    throw new Response("Nome da carteira não fornecido", { status: 400 });
-  }
-
   try {
+    const userData = await apiGet.getUserData(user.uid);
     const walletComparision = await apiGet.getWalletComparison(user.uid);
-    console.log(walletComparision);
+    const session = await getSession(request);
 
     return json(
-      { walletComparision },
+      {
+        userData,
+        walletComparision,
+      },
       {
         headers: {
           "Set-Cookie": await sessionStorage.commitSession(session),
@@ -52,66 +42,10 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
 };
 
 export default function MyWallets() {
-  const loaderData = useLoaderData<{ userData: UserData }>();
-  const { userData } = loaderData;
+  const loaderData = useLoaderData<{ userData: UserData; walletComparision: WalletData[] }>();
+  const { userData, walletComparision } = loaderData;
+
   const wallets = userData.wallets.wallets;
-  const { walletComparision } = useLoaderData<{ walletComparision: WalletData[] }>();
-
-  const [isClient, setIsClient] = useState(false);
-  const [Chart, setChart] = useState<React.ComponentType<any> | null>(null);
-
-  useEffect(() => {
-    setIsClient(true);
-    import("react-apexcharts").then((module) => {
-      setChart(() => module.default);
-    });
-  }, []);
-
-  // Verificação para garantir que walletComparision possui dados
-  if (!walletComparision || walletComparision.length === 0) {
-    return <div>No wallet comparison data available</div>;
-  }
-
-  const formatHistoricalData = (walletComparision: WalletData[]) => {
-    return walletComparision.map((wallet) => {
-      const dataKeys = wallet.history.map((entry) =>
-        format(parseISO(entry.date), "MMM/yy", { locale: ptBR })
-      );
-
-      const dataValues = wallet.history.map((entry) => entry.value);
-
-      return {
-        name: wallet.wallet_name,
-        data: dataValues,
-        categories: dataKeys,
-      };
-    });
-  };
-
-  const options = {
-    chart: {
-      type: "line" as const,
-      background: "#303030",
-      toolbar: { show: false },
-    },
-    xaxis: {
-      categories: walletComparision.length > 0 ? formatHistoricalData(walletComparision)[0].categories : [],
-      labels: { style: { colors: "#9ca3af" } },
-    },
-    yaxis: {
-      labels: { show: false },
-    },
-    stroke: {
-      curve: "smooth" as const,
-      dashArray: 5,
-    },
-    grid: {
-      borderColor: "#374151",
-    },
-    colors: ["#d1d5db", "#6b7280"], // Customize as colors for multiple lines if needed
-  };
-
-  const series = formatHistoricalData(walletComparision);
 
   if (!wallets || wallets.length === 0) {
     return (
@@ -137,12 +71,8 @@ export default function MyWallets() {
         percentChange={userData.rentability}
         textPts="Total das carteiras"
       />
-      <div className="flex items-center justify-center bg-red-500 min-h-60">
-        {isClient && Chart ? (
-          <Chart options={options} series={series} type="line" height={300} width="100%" />
-        ) : (
-          <p>Loading Graph...</p>
-        )}
+      <div className="flex items-center justify-center min-h-60">
+        <WalletsGraphic historical_data={walletComparision} />
       </div>
       <div className="grid grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4">
         {wallets.map((wallet) => {
