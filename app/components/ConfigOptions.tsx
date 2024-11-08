@@ -3,6 +3,7 @@ import ConfigPopup from "./ConfigPupop";
 import ConfigPopupUnit from "./ConfigPopupUnit";
 
 interface ConfigOptionsProps {
+  uuid: string;
   name: string;
   description: string;
   textButton: string;
@@ -14,6 +15,7 @@ interface ConfigOptionsProps {
 }
 
 export default function ConfigOptions({
+  uuid,
   name,
   description,
   textButton,
@@ -54,7 +56,7 @@ export default function ConfigOptions({
       {showPopup && (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
           {action === "Nome" ? (
-            <ConfigPopupUnit  />
+            <ConfigPopupUnit uuid={uuid}  />
           ) : (
             <ConfigPopup
               name={popupName}

@@ -36,10 +36,13 @@ export default function WalletsGraphic({ historical_data }: ActionGraphicProps) 
     format(parseISO(date), "MMM/yy", { locale: ptBR })
   );
 
-  const series = historical_data.map((wallet) => ({
-    name: wallet.wallet_name,
-    data: wallet.history.map((item) => item.value),
-  }));
+  const series = historical_data.map((wallet) => {
+    const initialValue = wallet.history[0]?.value || 0; // Valor inicial para normalizar
+    return {
+      name: wallet.wallet_name,
+      data: wallet.history.map((item) => item.value - initialValue), // Subtraindo o valor inicial
+    };
+  });
 
   const options = {
     chart: {

@@ -4,7 +4,7 @@ interface ConfigOptionsProps {
     name: string;
     description: string;
     isDestructive?: boolean;
-  }
+}
   
 
 export default function ConfigPopup({

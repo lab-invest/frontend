@@ -15,6 +15,18 @@ export default class AppData {
     this.baseUrl = baseUrl || "http://ec2-34-226-163-14.compute-1.amazonaws.com:8080";
   }
 
+  async deleteUserAccount(uid: string): Promise<JSON> {
+    return this.makeRequest(`/user?uuid=${encodeURIComponent(uid)}`, "DELETE");
+  }
+
+  async patchUserName(uid: string, name: string): Promise<JSON> {
+    return this.makeRequest(`/updateName?uuid=${encodeURIComponent(uid)}&name=${name}`, "PATCH");
+  }
+
+  async patchCleanUser(uid: string): Promise<JSON> {
+    return this.makeRequest(`/cleanUser?uuid=${encodeURIComponent(uid)}`, "PATCH");
+  }
+
   async getUserData(uid: string): Promise<JSON> {
     return this.makeRequest(`/user?uuid=${encodeURIComponent(uid)}`, "GET");
   }

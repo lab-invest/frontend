@@ -19,6 +19,7 @@ export default function Config() {
       <div className="flex">
         <div className="flex flex-col justify-between w-full min-h-[500px]">
           <ConfigOptions
+            uuid={userData.uuid}
             name="Nome completo"
             textButton="Alterar"
             description={userData.name}
@@ -29,6 +30,7 @@ export default function Config() {
             popupDescription="Adicione suas informações aqui. Clique em concluir quando estiver pronto."
           />
           <ConfigOptions
+            uuid={userData.uuid}
             name="Senha"
             textButton="Alterar"
             description="************"
@@ -39,6 +41,8 @@ export default function Config() {
             popupDescription="Ao clicar em continuar, vocÊ receberá um email para alterar sua senha."
           />
           <ConfigOptions
+            uuid={userData.uuid}
+            
             name="Data de Nascimento"
             textButton="Alterar"
             description={userData.birth_date}
@@ -49,6 +53,7 @@ export default function Config() {
             popupDescription=""
           />
           <ConfigOptions
+            uuid={userData.uuid}
             name="Resetar Conta"
             textButton="Resetar"
             description="Ao fazer isso todos os dados da sua conta serão redefinidos"
@@ -59,6 +64,7 @@ export default function Config() {
             popupDescription="Ao fazer isso sua conta será totalmente resetada."
           />
           <ConfigOptions
+            uuid={userData.uuid}
             name="Deletar Conta"
             textButton="Deletar"
             description="Ao fazer isso sua conta será totalmente deletada."
