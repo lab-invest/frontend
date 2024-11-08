@@ -14,6 +14,7 @@ import {
   Loading,
   PercentChangeIndicator,
 } from "~/components";
+import SellStock from "~/components/SellStock";
 import AppData from "~/services/appData";
 import { StockData } from "~/types/stockData";
 import { UserData } from "~/types/userData";
@@ -114,9 +115,12 @@ export default function SpecificWallet() {
   const splitPath = location.pathname.split("/");
   const actionName = splitPath[splitPath.length - 1];
   const [showBuyStock, setShowBuyStock] = useState(false);
+  const [showSellStock, setShowSellStock] = useState(false);
 
   const handleBuyClick = () => setShowBuyStock(true);
+  const handleSellClick = () => setShowSellStock(true);
   const handleCloseBuyStock = () => setShowBuyStock(false);
+  const handleCloseSellStock = () => setShowSellStock(false);
 
   useEffect(() => {
     if (
@@ -124,6 +128,7 @@ export default function SpecificWallet() {
       (fetcher.data as { success: boolean })?.success
     ) {
       setShowBuyStock(false);
+      setShowSellStock(false);
     }
   }, [fetcher.state, fetcher.data, setShowBuyStock]);
 
@@ -160,7 +165,12 @@ export default function SpecificWallet() {
           >
             Comprar
           </button>
-          <button className="bg-red-700 rounded w-full">Vender</button>
+          <button
+            className="bg-red-700 rounded w-full"
+            onClick={handleSellClick}
+          >
+            Vender
+          </button>
         </div>
         {showBuyStock && (
           <fetcher.Form method="post">
@@ -169,6 +179,18 @@ export default function SpecificWallet() {
               availableBalance={userData.balance}
               wallets={userData.wallets}
               onClose={handleCloseBuyStock}
+              ticket={stockData.img}
+              stockCotation={stockData?.stock_cotation}
+            />
+          </fetcher.Form>
+        )}
+        {showSellStock && (
+          <fetcher.Form method="post">
+            <SellStock
+              nameAction={stockData.company_name}
+              availableBalance={userData.balance}
+              wallets={userData.wallets.wallets}
+              onClose={handleCloseSellStock}
               ticket={stockData.img}
               stockCotation={stockData?.stock_cotation}
             />
