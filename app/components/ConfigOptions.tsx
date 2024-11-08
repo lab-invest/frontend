@@ -1,6 +1,6 @@
 import { useState } from "react";
-import ConfigPopup from "./ConfigPupop";
 import ConfigPopupUnit from "./ConfigPopupUnit";
+import ConfigPopup from "./ConfigPupop";
 
 interface ConfigOptionsProps {
   uuid: string;
@@ -12,6 +12,7 @@ interface ConfigOptionsProps {
   action: string;
   popupName: string;
   popupDescription: string;
+  showPopup2: boolean;
 }
 
 export default function ConfigOptions({
@@ -24,8 +25,9 @@ export default function ConfigOptions({
   action,
   popupName,
   popupDescription,
+  showPopup2,
 }: ConfigOptionsProps) {
-  const [showPopup, setShowPopup] = useState(false);
+  const [showPopup, setShowPopup] = useState(showPopup2);
 
   const handleClick = () => {
     setShowPopup(true);
@@ -55,10 +57,26 @@ export default function ConfigOptions({
 
       {showPopup && (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
-          {action === "Nome" ? (
-            <ConfigPopupUnit uuid={uuid}  />
+          {action != "resetAccount" && action != "deleteAccount" ? (
+            <ConfigPopupUnit
+              uuid={String(uuid)}
+              name={name}
+              textButton={textButton}
+              description={description}
+              isDestructive={isDestructive}
+              hideButton={hideButton}
+              action={action}
+              popupName={popupName}
+              popupDescription={popupDescription}
+              onClose={function (): void {
+                return setShowPopup(false);
+              }}
+            />
           ) : (
             <ConfigPopup
+              onClose={function (): void {
+                return setShowPopup(false);
+              }}
               name={popupName}
               action={action}
               description={popupDescription}

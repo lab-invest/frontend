@@ -12,7 +12,8 @@ export default class AppData {
   private readonly baseUrl: string;
 
   constructor(baseUrl: string = "") {
-    this.baseUrl = baseUrl || "http://ec2-34-226-163-14.compute-1.amazonaws.com:8080";
+    this.baseUrl =
+      baseUrl || "http://ec2-34-226-163-14.compute-1.amazonaws.com:8080";
   }
 
   async deleteUserAccount(uid: string): Promise<JSON> {
@@ -20,11 +21,17 @@ export default class AppData {
   }
 
   async patchUserName(uid: string, name: string): Promise<JSON> {
-    return this.makeRequest(`/updateName?uuid=${encodeURIComponent(uid)}&name=${name}`, "PATCH");
+    return this.makeRequest(
+      `/updateName?uuid=${encodeURIComponent(uid)}&name=${name}`,
+      "PATCH"
+    );
   }
 
   async patchCleanUser(uid: string): Promise<JSON> {
-    return this.makeRequest(`/cleanUser?uuid=${encodeURIComponent(uid)}`, "PATCH");
+    return this.makeRequest(
+      `/cleanUser?uuid=${encodeURIComponent(uid)}`,
+      "PATCH"
+    );
   }
 
   async getUserData(uid: string): Promise<JSON> {
@@ -79,10 +86,7 @@ export default class AppData {
   }
 
   async updateUserName(uid: string, name: string): Promise<JSON> {
-    return this.makeRequest(`/updateName`, "PATCH", {
-      uuid: uid,
-      name,
-    });
+    return this.makeRequest(`/updateName?uuid=${uid}&name=${name}`, "PATCH");
   }
 
   async resetAccount(uid: string): Promise<JSON> {
