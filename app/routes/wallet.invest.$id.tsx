@@ -1,9 +1,12 @@
+// Outras importações
 import type { LoaderFunctionArgs } from "@remix-run/node";
 import { json, redirect } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
 import { InfoActionDetails, PercentChangeIndicator } from "~/components";
 import AppData from "~/services/appData";
 import { getSession, getUser, sessionStorage } from "~/utils/session.server";
+import { StockData } from "~/types/stocksComparison";
+import StockGraphic from "~/components/StockGraphic";  // Alteração aqui
 
 interface WalletData {
   name: string;
@@ -30,7 +33,6 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
   const session = await getSession(request);
   const apiGet = new AppData();
 
-  // Extrair o walletName da URL
   const url = new URL(request.url);
   const pathname = url.pathname;
   const segments = pathname.split("/");
@@ -43,11 +45,19 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
   }
 
   try {
-    const walletData = await apiGet.getWalletByName(user.uid, walletName);
+    const walletData = (await apiGet.getWalletByName(user.uid, walletName)) as any as WalletData;
+
+    if (!walletData || !walletData.name || !walletData.total || !walletData.rentability || !walletData.items) {
+      throw new Error("Dados da carteira estão incompletos ou mal formatados.");
+    }
+
+    const tickers = walletData.items.map((item) => item.ticker);
+    const stocksComparison = await apiGet.getStockComparison(tickers);
 
     return json(
       {
         walletData,
+        stocksComparison,
       },
       {
         headers: {
@@ -65,6 +75,8 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
 
 export default function SpecificWallet() {
   const { userData } = useLoaderData<LoaderData>();
+  const loaderData = useLoaderData<{ stocksComparison: StockData }>();
+  const { stocksComparison } = loaderData;
 
   if (!userData) {
     return <div>Loading...</div>;
@@ -75,9 +87,9 @@ export default function SpecificWallet() {
       <div className="flex flex-col py-4 justify-between bg-secondary w-full max-w-72 min-h-[588px] rounded">
         <div className="flex flex-col gap-y-6">
           {userData.items && userData.items.length > 0 ? (
-            userData.items.map((item, index) => (
+            userData.items.map((item) => (
               <InfoActionDetails
-                key={index}
+                key={item.ticker}
                 actionImage={item.stock_img}
                 nameAction={item.ticker}
                 price={0}
@@ -99,8 +111,8 @@ export default function SpecificWallet() {
           <PercentChangeIndicator percentChange={userData.rentability} />
         </div>
       </div>
-      <div className="bg-red-800 flex items-center justify-center w-full">
-        <p>Wallet charts</p>
+      <div className="flex items-center justify-center min-h-60">
+        <StockGraphic stocks={stocksComparison.stocks} />
       </div>
     </div>
   );
