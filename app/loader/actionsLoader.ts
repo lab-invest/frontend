@@ -13,6 +13,7 @@ export const actionsLoader = async ({ request }: { request: Request }) => {
 
   try {
     const stockpage = await apiGet.getStokpage();
+
     return json(stockpage);
   } catch (error) {
     console.error("Erro ao buscar dados do usuário ou carteiras:", error);

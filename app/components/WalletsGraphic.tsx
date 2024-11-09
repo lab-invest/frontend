@@ -1,22 +1,24 @@
 import React, { useEffect, useState } from "react";
 import { format, parseISO } from "date-fns";
-import { ptBR } from "date-fns/locale"; // Importar o locale em português
+import { ptBR } from "date-fns/locale";
 
-interface ActionGraphicProps {
-  historical_data: {
-    [key: string]: number;
-  };
+interface HistoryData {
+  date: string;
+  value: number;
 }
 
-export default function ActionGraphic({ historical_data }: ActionGraphicProps) {
+interface WalletData {
+  wallet_name: string;
+  history: HistoryData[];
+}
+
+interface ActionGraphicProps {
+  historical_data: WalletData[];
+}
+
+export default function WalletsGraphic({ historical_data }: ActionGraphicProps) {
   const [isClient, setIsClient] = useState(false);
   const [Chart, setChart] = useState<React.ComponentType<any> | null>(null);
-
-  const dataKeys = Object.keys(historical_data).map(date =>
-    format(parseISO(date), "MMM/yy", { locale: ptBR }) // Aplicar o locale ptBR
-  );
-
-  const dataValues = Object.values(historical_data);
 
   useEffect(() => {
     setIsClient(true);
@@ -24,6 +26,22 @@ export default function ActionGraphic({ historical_data }: ActionGraphicProps) {
       setChart(() => module.default);
     });
   }, []);
+
+  if (!historical_data || historical_data.length === 0) {
+    return <div>No data available</div>;
+  }
+
+  const dataKeys = historical_data[0]?.history.map(({ date }) =>
+    format(parseISO(date), "MMM/yy", { locale: ptBR })
+  );
+
+  const series = historical_data.map((wallet) => {
+    const initialValue = wallet.history[0]?.value || 0;
+    return {
+      name: wallet.wallet_name,
+      data: wallet.history.map((item) => item.value - initialValue),
+    };
+  });
 
   const options = {
     chart: {
@@ -36,7 +54,7 @@ export default function ActionGraphic({ historical_data }: ActionGraphicProps) {
       labels: { style: { colors: "#9ca3af" } },
     },
     yaxis: {
-      labels: { show: false }, 
+      labels: { show: false },
     },
     stroke: {
       curve: "smooth" as const,
@@ -45,20 +63,13 @@ export default function ActionGraphic({ historical_data }: ActionGraphicProps) {
     grid: {
       borderColor: "#374151",
     },
-    colors: ["#d1d5db"],
+    colors: ["#d1d5db", "#a3e635", "#3b82f6"],
     legend: {
       labels: {
         colors: "#ffffff",
       },
     },
   };
-
-  const series = [
-    {
-      name: "Data",
-      data: dataValues,
-    },
-  ];
 
   return (
     <div className="bg-secondary p-4 rounded-lg w-full">

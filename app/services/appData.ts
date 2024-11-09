@@ -12,7 +12,19 @@ export default class AppData {
   private readonly baseUrl: string;
 
   constructor(baseUrl: string = "") {
-    this.baseUrl = baseUrl || "https://investlab-back.onrender.com";
+    this.baseUrl =
+      baseUrl || "http://ec2-34-226-163-14.compute-1.amazonaws.com:8080";
+  }
+
+  async deleteUserAccount(uid: string): Promise<JSON> {
+    return this.makeRequest(`/user?uuid=${encodeURIComponent(uid)}`, "DELETE");
+  }
+
+  async patchUserName(uid: string, name: string): Promise<JSON> {
+    return this.makeRequest(
+      `/updateName?uuid=${encodeURIComponent(uid)}&name=${name}`,
+      "PATCH"
+    );
   }
 
   async getUserData(uid: string): Promise<JSON> {
@@ -33,9 +45,30 @@ export default class AppData {
     );
   }
 
+  async getWalletComparison(uid: string): Promise<JSON> {
+    return this.makeRequest(
+      `/bff/wallet/comparison?uuid=${encodeURIComponent(uid)}`,
+      "GET"
+    );
+  }
+
+  async getStockComparison(stocks: string[]): Promise<JSON> {
+    return this.makeRequest(
+      `/bff/stock/comparison?ticker=${stocks}`,
+      "GET"
+    );
+  }
+
   async getWalletByName(uid: string, walletName: string): Promise<JSON> {
     return this.makeRequest(
       `/user/wallet?uuid=${encodeURIComponent(uid)}&wallet=${walletName}`,
+      "GET"
+    );
+  }
+
+  async getWalletComparisonAside(uid: string, walletName: string): Promise<JSON> {
+    return this.makeRequest(
+      `/bff/stock/comparison/aside?uuid=${encodeURIComponent(uid)}&wallet=${walletName}`,
       "GET"
     );
   }
@@ -55,15 +88,26 @@ export default class AppData {
     return this.makeRequest(`/bff/stock/marketplace?ticker=${ticker}`, "GET");
   }
 
+  async buyStock(
+    uid: string,
+    wallet: string,
+    ticker: string,
+    quantity: number,
+    average_price: number
+  ): Promise<JSON> {
+    return this.makeRequest(`/stock?uuid=${uid}&wallet=${wallet}`, "PATCH", {
+      ticker,
+      quantity,
+      average_price,
+    });
+  }
+
   async deleteUser(uid: string): Promise<JSON> {
     return this.makeRequest(`/user?uuid=${encodeURIComponent(uid)}`, "DELETE");
   }
 
   async updateUserName(uid: string, name: string): Promise<JSON> {
-    return this.makeRequest(`/updateName`, "PATCH", {
-      uuid: uid,
-      name,
-    });
+    return this.makeRequest(`/updateName?uuid=${uid}&name=${name}`, "PATCH");
   }
 
   async resetAccount(uid: string): Promise<JSON> {

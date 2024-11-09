@@ -1,15 +1,23 @@
-import { json, LoaderFunctionArgs, redirect } from "@remix-run/node";
-import { useLoaderData } from "@remix-run/react";
-import { useState } from "react";
+import {
+  ActionFunction,
+  json,
+  LoaderFunctionArgs,
+  redirect,
+} from "@remix-run/node";
+import { useFetcher, useLoaderData, useLocation } from "@remix-run/react";
+import { useEffect, useState } from "react";
 import {
   ActionBar,
   ActionGraphic,
   BuyStock,
   InfoActionPoints,
+  Loading,
   PercentChangeIndicator,
 } from "~/components";
+import SellStock from "~/components/SellStock";
 import AppData from "~/services/appData";
 import { StockData } from "~/types/stockData";
+import { UserData } from "~/types/userData";
 import { getSession, getUser, sessionStorage } from "~/utils/session.server";
 
 export const loader = async ({ request }: LoaderFunctionArgs) => {
@@ -27,18 +35,16 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
   const segments = pathname.split("/");
   const actionName = segments[segments.length - 1];
 
-  console.log("walletName extraído:", actionName);
-
   if (!actionName) {
     throw new Response("Nome da carteira não fornecido", { status: 400 });
   }
 
   try {
     const stockData = await apiGet.getStockInfos(actionName);
-    console.log(stockData);
+    const userData = await apiGet.getUserData(user.uid);
 
     return json(
-      { stockData },
+      { stockData, userData },
       {
         headers: {
           "Set-Cookie": await sessionStorage.commitSession(session),
@@ -53,54 +59,146 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
   }
 };
 
+export const action: ActionFunction = async ({ request }) => {
+  const formData = await request.formData();
+
+  const newWalletName = formData.get("newWalletName") as string;
+  const selectedWallet = formData.get("selectedWallet") as string;
+  const quantity = Number(formData.get("quantity"));
+  const average_price = Number(formData.get("availableBalance"));
+
+  const url = new URL(request.url);
+  const pathname = url.pathname;
+  const segments = pathname.split("/");
+  const actionName = segments[segments.length - 1];
+  const teste = actionName.split(".");
+  const ticker = teste[0];
+
+  console.log("formData", formData);
+
+  let walletName: string | null = null;
+
+  if (newWalletName && !selectedWallet) {
+    walletName = newWalletName;
+  }
+
+  try {
+    const user = await getUser(request);
+    const session = await getSession(request);
+    const apiGet = new AppData();
+    const buyAction = await apiGet.buyStock(
+      user.uid,
+      newWalletName || selectedWallet,
+      ticker,
+      quantity,
+      average_price
+    );
+    return json(
+      { buyAction, walletName, success: true },
+      {
+        headers: {
+          "Set-Cookie": await sessionStorage.commitSession(session),
+        },
+      }
+    );
+  } catch (e) {
+    console.error("Erro ao comprar ação", e);
+    return json({ success: false, error: "Erro ao comprar ação" });
+  }
+};
+
 export default function SpecificWallet() {
   const { stockData } = useLoaderData<{ stockData: StockData }>();
-  // const [showBuyPopup, setShowBuyPopup] = useState(false);
+  const { userData } = useLoaderData<{ userData: UserData }>();
+  const fetcher = useFetcher();
+  const location = useLocation();
+  const splitPath = location.pathname.split("/");
+  const actionName = splitPath[splitPath.length - 1];
   const [showBuyStock, setShowBuyStock] = useState(false);
+  const [showSellStock, setShowSellStock] = useState(false);
 
   const handleBuyClick = () => setShowBuyStock(true);
+  const handleSellClick = () => setShowSellStock(true);
   const handleCloseBuyStock = () => setShowBuyStock(false);
+  const handleCloseSellStock = () => setShowSellStock(false);
+
+  useEffect(() => {
+    if (
+      fetcher.state === "idle" &&
+      (fetcher.data as { success: boolean })?.success
+    ) {
+      setShowBuyStock(false);
+      setShowSellStock(false);
+    }
+  }, [fetcher.state, fetcher.data, setShowBuyStock]);
+
+  const serializedWallets = JSON.stringify(userData.wallets);
 
   return (
-    <div className="flex flex-col gap-6">
-      <InfoActionPoints
-        valueAction={stockData?.stock_cotation || 0}
-        textPts="P3TR4"
-      />
-      <div className="flex flex-col">
-        <div className="self-end">
-          <PercentChangeIndicator percentChange={stockData?.rentability || 0} />
-        </div>
-        <div className="flex items-center justify-center min-h-80">
-          <ActionGraphic historical_data={stockData?.historical_data} />
-        </div>
-      </div>
-      <ActionBar
-        nameAction="P3TR4"
-        openAction={stockData?.aditional_data.Open}
-        closeAction={stockData?.aditional_data.Close}
-        highAction={stockData?.aditional_data.High}
-        lowAction={stockData?.aditional_data.Low}
-        volumeAction={stockData?.aditional_data.Volume}
-      />
-      <div className="flex h-10 gap-x-10 text-white">
-        <button
-          className="bg-green-700 rounded w-full"
-          onClick={handleBuyClick}
-        >
-          Comprar
-        </button>
-        <button className="bg-red-700 rounded w-full">Vender</button>
-      </div>
-      {showBuyStock && (
-        <BuyStock
-          availableBalance={100000}
-          wallets={["1", "2", "3", "4", "5", "6"]}
-          onClose={handleCloseBuyStock}
-          ticket="PETR4"
-          stockCotation={stockData?.stock_cotation}
+    <>
+      {fetcher.state === "loading" ? <Loading /> : null}
+      <div className="flex flex-col gap-6">
+        <InfoActionPoints
+          pointValue={stockData.stock_cotation}
+          valueAction={stockData.stock_cotation}
+          textPts={actionName}
         />
-      )}
-    </div>
+        <div className="flex flex-col">
+          <div className="self-end">
+            <PercentChangeIndicator percentChange={stockData.rentability} />
+          </div>
+          <div className="flex items-center justify-center min-h-80">
+            <ActionGraphic historical_data={stockData.historical_data} />
+          </div>
+        </div>
+        <ActionBar
+          action_image={stockData.img}
+          nameAction={actionName}
+          openAction={stockData.aditional_data.Open}
+          closeAction={stockData.aditional_data.Close}
+          highAction={stockData.aditional_data.High}
+          lowAction={stockData.aditional_data.Low}
+          volumeAction={stockData.aditional_data.Volume}
+        />
+        <div className="flex h-10 gap-x-10 text-white">
+          <button
+            className="bg-green-700 rounded w-full"
+            onClick={handleBuyClick}
+          >
+            Comprar
+          </button>
+          <button
+            className="bg-red-700 rounded w-full"
+            onClick={handleSellClick}
+          >
+            Vender
+          </button>
+        </div>
+        {showBuyStock && (
+          <fetcher.Form method="post">
+            <BuyStock
+              nameAction={stockData.company_name}
+              availableBalance={userData.balance}
+              wallets={serializedWallets}
+              onClose={handleCloseBuyStock}
+              ticket={stockData.img}
+              stockCotation={stockData?.stock_cotation}
+            />
+          </fetcher.Form>
+        )}
+        {showSellStock && (
+          <fetcher.Form method="post">
+            <SellStock
+              nameAction={stockData.company_name}
+              availableBalance={userData.balance}
+              wallets={serializedWallets}
+              onClose={handleCloseSellStock}
+              ticket={stockData.img}
+              stockCotation={stockData?.stock_cotation}
+            />
+          </fetcher.Form>
+        )}
+      </div>
+    </>
   );
 }
