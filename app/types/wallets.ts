@@ -1,16 +1,12 @@
-export interface WalletItem {
+export type Stock = {
   ticker: string;
   quantity: number;
-  stock_img: string;
-}
+  averagePrice: number;
+};
 
-// Definição do tipo de cada carteira
-export interface Wallet {
-  name: string;
-  total: number;
-  rentability: number;
-  items: WalletItem[];
-}
+export type Wallet = {
+  [ticker: string]: Stock;
+};
 
 export type WalletsProps = {
   [walletName: string]: Wallet;

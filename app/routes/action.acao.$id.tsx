@@ -132,6 +132,8 @@ export default function SpecificWallet() {
     }
   }, [fetcher.state, fetcher.data, setShowBuyStock]);
 
+  const serializedWallets = JSON.stringify(userData.wallets);
+
   return (
     <>
       {fetcher.state === "loading" ? <Loading /> : null}
@@ -177,7 +179,7 @@ export default function SpecificWallet() {
             <BuyStock
               nameAction={stockData.company_name}
               availableBalance={userData.balance}
-              wallets={userData.wallets}
+              wallets={serializedWallets}
               onClose={handleCloseBuyStock}
               ticket={stockData.img}
               stockCotation={stockData?.stock_cotation}
@@ -189,7 +191,7 @@ export default function SpecificWallet() {
             <SellStock
               nameAction={stockData.company_name}
               availableBalance={userData.balance}
-              wallets={userData.wallets.wallets}
+              wallets={serializedWallets}
               onClose={handleCloseSellStock}
               ticket={stockData.img}
               stockCotation={stockData?.stock_cotation}
