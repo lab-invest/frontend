@@ -46,6 +46,11 @@ export default function ActionGraphic({ historical_data }: ActionGraphicProps) {
       borderColor: "#374151",
     },
     colors: ["#d1d5db"],
+    legend: {
+      labels: {
+        colors: "#ffffff",
+      },
+    },
   };
 
   const series = [

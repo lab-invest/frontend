@@ -66,6 +66,13 @@ export default class AppData {
     );
   }
 
+  async getWalletComparisonAside(uid: string, walletName: string): Promise<JSON> {
+    return this.makeRequest(
+      `/bff/stock/comparison/aside?uuid=${encodeURIComponent(uid)}&wallet=${walletName}`,
+      "GET"
+    );
+  }
+
   async getUserBalance(uid: string): Promise<JSON> {
     return this.makeRequest(
       `/user/balance?uuid=${encodeURIComponent(uid)}`,

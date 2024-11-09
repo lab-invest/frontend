@@ -64,6 +64,11 @@ export default function WalletsGraphic({ historical_data }: ActionGraphicProps) 
       borderColor: "#374151",
     },
     colors: ["#d1d5db", "#a3e635", "#3b82f6"],
+    legend: {
+      labels: {
+        colors: "#ffffff",
+      },
+    },
   };
 
   return (

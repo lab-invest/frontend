@@ -61,6 +61,11 @@ export default function StockGraphic({ stocks }: StockData) {
       borderColor: "#374151",
     },
     colors: ["#d1d5db", "#a3e635", "#3b82f6", "#f59e0b", "#ef4444"],
+    legend: {
+      labels: {
+        colors: "#ffffff",
+      },
+    },
   };
 
   return (
