@@ -59,9 +59,23 @@ export default class AppData {
     );
   }
 
+  async getStockComparison(stocks: string[]): Promise<JSON> {
+    return this.makeRequest(
+      `/bff/stock/comparison?ticker=${stocks}`,
+      "GET"
+    );
+  }
+
   async getWalletByName(uid: string, walletName: string): Promise<JSON> {
     return this.makeRequest(
       `/user/wallet?uuid=${encodeURIComponent(uid)}&wallet=${walletName}`,
+      "GET"
+    );
+  }
+
+  async getWalletComparisonAside(uid: string, walletName: string): Promise<JSON> {
+    return this.makeRequest(
+      `/bff/stock/comparison/aside?uuid=${encodeURIComponent(uid)}&wallet=${walletName}`,
       "GET"
     );
   }

@@ -27,7 +27,6 @@ export default function WalletsGraphic({ historical_data }: ActionGraphicProps) 
     });
   }, []);
 
-  // Verificação se historical_data existe e não é vazio
   if (!historical_data || historical_data.length === 0) {
     return <div>No data available</div>;
   }
@@ -37,10 +36,10 @@ export default function WalletsGraphic({ historical_data }: ActionGraphicProps) 
   );
 
   const series = historical_data.map((wallet) => {
-    const initialValue = wallet.history[0]?.value || 0; // Valor inicial para normalizar
+    const initialValue = wallet.history[0]?.value || 0;
     return {
       name: wallet.wallet_name,
-      data: wallet.history.map((item) => item.value - initialValue), // Subtraindo o valor inicial
+      data: wallet.history.map((item) => item.value - initialValue),
     };
   });
 
@@ -65,6 +64,11 @@ export default function WalletsGraphic({ historical_data }: ActionGraphicProps) 
       borderColor: "#374151",
     },
     colors: ["#d1d5db", "#a3e635", "#3b82f6"],
+    legend: {
+      labels: {
+        colors: "#ffffff",
+      },
+    },
   };
 
   return (
