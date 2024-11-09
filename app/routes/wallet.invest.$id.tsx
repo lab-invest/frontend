@@ -1,12 +1,10 @@
-// Outras importações
 import type { LoaderFunctionArgs } from "@remix-run/node";
 import { json, redirect } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
 import { InfoActionDetails, PercentChangeIndicator } from "~/components";
+import StockGraphic, { StockData } from "~/components/StockGraphic";
 import AppData from "~/services/appData";
 import { getSession, getUser, sessionStorage } from "~/utils/session.server";
-import { StockData } from "~/types/stocksComparison";
-import StockGraphic from "~/components/StockGraphic";  // Alteração aqui
 
 interface WalletData {
   name: string;
@@ -20,7 +18,7 @@ interface WalletData {
 }
 
 type LoaderData = {
-  userData: WalletData;
+  walletData: WalletData;
 };
 
 export const loader = async ({ request }: LoaderFunctionArgs) => {
@@ -38,19 +36,15 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
   const segments = pathname.split("/");
   const walletName = segments[segments.length - 1];
 
-  console.log("walletName extraído:", walletName);
-
   if (!walletName) {
     throw new Response("Nome da carteira não fornecido", { status: 400 });
   }
 
   try {
-    const walletData = (await apiGet.getWalletByName(user.uid, walletName)) as any as WalletData;
-
-    if (!walletData || !walletData.name || !walletData.total || !walletData.rentability || !walletData.items) {
-      throw new Error("Dados da carteira estão incompletos ou mal formatados.");
-    }
-
+    const walletData = (await apiGet.getWalletByName(
+      user.uid,
+      walletName
+    )) as unknown as WalletData;
     const tickers = walletData.items.map((item) => item.ticker);
     const stocksComparison = await apiGet.getStockComparison(tickers);
 
@@ -74,11 +68,13 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
 };
 
 export default function SpecificWallet() {
-  const { userData } = useLoaderData<LoaderData>();
+  const { walletData } = useLoaderData<LoaderData>();
   const loaderData = useLoaderData<{ stocksComparison: StockData }>();
   const { stocksComparison } = loaderData;
 
-  if (!userData) {
+  console.log(walletData);
+
+  if (!walletData) {
     return <div>Loading...</div>;
   }
 
@@ -86,10 +82,10 @@ export default function SpecificWallet() {
     <div className="flex gap-x-8 h-full">
       <div className="flex flex-col py-4 justify-between bg-secondary w-full max-w-72 min-h-[588px] rounded">
         <div className="flex flex-col gap-y-6">
-          {userData.items && userData.items.length > 0 ? (
-            userData.items.map((item) => (
+          {walletData.items && walletData.items.length > 0 ? (
+            walletData.items.map((item, index) => (
               <InfoActionDetails
-                key={item.ticker}
+                key={index}
                 actionImage={item.stock_img}
                 nameAction={item.ticker}
                 price={0}
@@ -101,17 +97,17 @@ export default function SpecificWallet() {
           )}
         </div>
         <div className="flex flex-col text-white items-center">
-          <h1 className="text-lg">{userData.name}</h1>
+          <h1 className="text-lg">{walletData.name}</h1>
           <p className="text-2xl font-semibold">
             R${" "}
-            {userData.total.toLocaleString("pt-BR", {
+            {walletData.total.toLocaleString("pt-BR", {
               minimumFractionDigits: 2,
             })}
           </p>
-          <PercentChangeIndicator percentChange={userData.rentability} />
+          <PercentChangeIndicator percentChange={walletData.rentability} />
         </div>
       </div>
-      <div className="flex items-center justify-center min-h-60">
+      <div className="bg-red-800 flex items-center justify-center w-full">
         <StockGraphic stocks={stocksComparison.stocks} />
       </div>
     </div>
