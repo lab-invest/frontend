@@ -7,8 +7,8 @@ import {
   SpecActions,
 } from "~/components";
 import { actionsLoader } from "~/loader/actionsLoader";
+import { useState } from "react";
 
-// Definição dos tipos TypeScript
 type ActionItem = {
   nome: string;
   rentabilidade: number;
@@ -38,9 +38,15 @@ export default function SearchAction() {
   const ibovRent = data.ibov_rent;
   const items = data.additional_data.items;
 
+  const [searchTerm, setSearchTerm] = useState("");
+
+  const filteredItems = items.filter(action =>
+    action.nome.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
   return (
     <div className="flex flex-col gap-y-5">
-      <Searchbar />
+      <Searchbar onSearchChange={setSearchTerm} />
       <BoxVariation />
       <InfoActionPoints
         textPts={`IBOVESPA`}
@@ -49,7 +55,7 @@ export default function SearchAction() {
         hasPercentual
       />
       <div className="grid grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-y-8 place-items-center">
-        {items.map((action) => (
+        {filteredItems.map((action) => (
           <SpecActions
             key={action.nome}
             actionName={action.nome}

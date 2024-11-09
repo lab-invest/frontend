@@ -1,5 +1,5 @@
 import { MetaFunction } from "@remix-run/node";
-import { useLoaderData } from "@remix-run/react";
+import { useLoaderData, useNavigate } from "@remix-run/react"; // Importar useNavigate
 import {
   BoxVariation,
   InfoUserAndMoney,
@@ -18,20 +18,31 @@ export const loader = homeLoader;
 
 export default function Home() {
   const loaderData = useLoaderData<{ userData: UserData }>();
+  const navigate = useNavigate();
 
   const { userData } = loaderData;
   const wallets = userData.wallets?.wallets || [];
 
+  const handleSearchClick = () => {
+    navigate("/action/search");
+  };
+
   if (!wallets || wallets.length === 0) {
     return (
       <Layout userData={userData} className="gap-y-5">
-        <Searchbar />
+        <div className="relative">
+          <Searchbar />
+          <div
+            className="absolute inset-0 cursor-pointer"
+            onClick={handleSearchClick}
+          />
+        </div>
         <BoxVariation />
         <div className="py-5">
           <InfoUserAndMoney
             percentChange={userData.rentability}
             text="Bem vindo"
-            nameUser={userData.name}
+            nameUser ={userData.name}
             walletValue={userData.balance}
             textPts="Todas as carteiras"
           />
@@ -46,13 +57,19 @@ export default function Home() {
   return (
     <>
       <Layout userData={userData} className="gap-y-5">
-        <Searchbar />
+        <div className="relative">
+          <Searchbar />
+          <div
+            className="absolute inset-0 cursor-pointer"
+            onClick={handleSearchClick}
+          />
+        </div>
         <BoxVariation />
         <div className="py-5">
           <InfoUserAndMoney
             percentChange={userData.rentability}
             text="Bem vindo"
-            nameUser={userData.name}
+            nameUser ={userData.name}
             walletValue={userData.balance}
             textPts="Todas as carteiras"
           />
