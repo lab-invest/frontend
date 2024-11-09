@@ -5,20 +5,27 @@ interface ActionbarProps {
   lowAction: number;
   closeAction: number;
   volumeAction: number;
+  action_image: string;
 }
 
-export default function ActionBar({ nameAction, openAction, highAction, lowAction, closeAction, volumeAction }: ActionbarProps) {
+export default function ActionBar({
+  nameAction,
+  openAction,
+  highAction,
+  lowAction,
+  closeAction,
+  volumeAction,
+  action_image,
+}: ActionbarProps) {
+  const nameActionUpdate = nameAction.split(" S.A")[0].trim();
   return (
     <div className="bg-secondary p-3 flex rounded-sm">
       <div className="flex items-center mr-6">
         <div className="w-6 mr-4">
-          <img
-            src="https://s3-symbol-logo.tradingview.com/brasileiro-petrobras--600.png"
-            alt="teste"
-          />
+          <img src={action_image} alt="teste" />
         </div>
         <p className=" text-white text-sm 2xl:text-base font-semibold">
-          {nameAction}
+          {nameActionUpdate}
         </p>
       </div>
 

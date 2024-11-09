@@ -1,5 +1,5 @@
-// Importações necessárias
 import { useLoaderData } from "@remix-run/react";
+import { useState } from "react";
 import {
   BoxVariation,
   InfoActionPoints,
@@ -7,7 +7,6 @@ import {
   SpecActions,
 } from "~/components";
 import { actionsLoader } from "~/loader/actionsLoader";
-import { useState } from "react";
 
 type ActionItem = {
   nome: string;
@@ -40,14 +39,14 @@ export default function SearchAction() {
 
   const [searchTerm, setSearchTerm] = useState("");
 
-  const filteredItems = items.filter(action =>
+  const filteredItems = items.filter((action) =>
     action.nome.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   return (
     <div className="flex flex-col gap-y-5">
       <Searchbar onSearchChange={setSearchTerm} />
-      <BoxVariation />
+      <BoxVariation additionalData={data.additional_data} />
       <InfoActionPoints
         textPts={`IBOVESPA`}
         valueAction={ibovRent}
@@ -59,7 +58,7 @@ export default function SearchAction() {
           <SpecActions
             key={action.nome}
             actionName={action.nome}
-            valueAction={action.preco_atual}
+            valueAction={action.rentabilidade}
             actionImage={action.imagem}
             open={action.abertura}
             close={action.fechamento}

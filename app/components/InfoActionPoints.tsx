@@ -39,7 +39,6 @@ export default function InfoActionPoints({
 }: InfoActionPointsProps) {
   const action = verifyAction(valueAction ?? 0);
 
-  // Formatação segura do valor da ação
   const formattedValueAction =
     (valueAction ?? 0) > 0
       ? `+${(valueAction ?? 0).toFixed(2)}`
@@ -49,7 +48,7 @@ export default function InfoActionPoints({
     <div className="flex flex-col gap-y-1 text-center items-center">
       <p className="text-gray text-lg">{textPts}</p>
       <h1 className="text-white text-2xl sm:text-3xl lg:text-4xl font-semibold">
-        {pointValue}
+        R$ {pointValue?.toFixed(2)}
       </h1>
       {hasPercentual ? (
         <div
