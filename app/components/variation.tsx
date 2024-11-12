@@ -8,13 +8,23 @@ interface VariationProps {
 }
 
 function verifyAction(valueAction: number) {
-  if (valueAction > 0) {
+  // console.log("MathAbs", Math.abs(Number(valueAction.toFixed(2))));
+  // console.log("Mathabs2", Math.abs(Number(valueAction.toFixed(2))) === 0.0);
+  // console.log("Mathabs3", Math.abs(Number(valueAction.toFixed(2))) === 0.0);
+  // if (Math.abs(valueAction) === 0.0) {
+  //   return {
+  //     color: "text-white",
+  //     bgColor: "bg-third",
+  //     imageArrow: <SvgArrow />,
+  //   };
+  // }
+  if (Math.abs(Number(valueAction.toFixed(2))) > 0) {
     return {
       color: "text-green_good",
       bgColor: "bg-dark_green",
       imageArrow: <SvgGreenArrow />,
     };
-  } else if (valueAction < 0) {
+  } else if (Math.abs(Number(valueAction.toFixed(2))) < 0) {
     return {
       color: "text-red-500",
       bgColor: "bg-dark_red",
