@@ -1,6 +1,7 @@
 import SvgArrow from "~/icons/arrowDefaultIcon";
 import SvgGreenArrow from "~/icons/arrowGreenIcon";
 import SvgRedArrow from "~/icons/arrowRedIcon";
+import formaterValues from "~/utils/formaterNumber";
 
 interface InfoUserAndMoneyProps {
   text: string;
@@ -55,7 +56,7 @@ export default function InfoUserAndMoney({
         <div className="flex flex-col gap-y-1 text-center items-end">
           <p className="text-gray text-xs sm:text-sm lg:text-md">{textPts}</p>
           <h1 className="text-white text-2xl sm:text-3xl lg:text-4xl font-semibold">
-            R$ {walletValue.toFixed(2)}
+            R$ {formaterValues(walletValue.toFixed(2))}
           </h1>
           <div className="flex justify-between text-base lg:text-lg gap-x-6">
             <div className="flex items-center gap-x-1.5">

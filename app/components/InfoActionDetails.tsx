@@ -1,3 +1,4 @@
+import formaterValues from "~/utils/formaterNumber";
 import Variation from "./variation";
 
 export type InfoActionDetailsProps = {
@@ -15,7 +16,7 @@ export default function InfoActionDetails({
 }: InfoActionDetailsProps) {
   return (
     <div className="flex justify-between px-3 text-white">
-      <p>R$ {price.toFixed(2)}</p>
+      <p>R$ {formaterValues(price.toFixed(2))}</p>
       <div className="flex gap-x-4">
         <Variation nameAction={nameAction} valueAction={valueAction} />
         <div className="w-7 h-full bg-red-600 rounded">

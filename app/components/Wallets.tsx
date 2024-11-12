@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import SvgMore from "~/icons/more";
+import formaterValues from "~/utils/formaterNumber";
 import Variation from "./variation";
 
 interface InvestmentCardProps {
@@ -48,7 +49,7 @@ export default function Wallets({
         role="button"
       >
         <h3 className="text-grayt">{name}</h3>
-        <p>R$ {price?.toFixed(2)}</p>
+        <p>R$ {formaterValues(price?.toFixed(2))}</p>
         <div className="flex justify-between mt-4 pr-2">
           {imagesDisplayed.map((imageUrl, index) => (
             <img

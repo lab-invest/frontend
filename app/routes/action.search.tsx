@@ -54,7 +54,7 @@ export default function SearchAction() {
         hasPercentual
       />
       <div className="grid grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-y-8 place-items-center">
-        {filteredItems.map((action) => (
+        {filteredItems.slice(0, 9).map((action) => (
           <SpecActions
             key={action.nome}
             actionName={action.nome}

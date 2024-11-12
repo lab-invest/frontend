@@ -24,9 +24,7 @@ export default function StockGraphic({ stocks }: StockData) {
   const stockSymbols = stocks.map((stock) => Object.keys(stock)[0]);
   const dates = Array.from(
     new Set(
-      stocks
-        .map((stock) => Object.keys(stock[Object.keys(stock)[0]]))
-        .flat()
+      stocks.map((stock) => Object.keys(stock[Object.keys(stock)[0]])).flat()
     )
   ).sort((a, b) => parseISO(a).getTime() - parseISO(b).getTime());
 
@@ -71,7 +69,13 @@ export default function StockGraphic({ stocks }: StockData) {
   return (
     <div className="bg-secondary p-4 rounded-lg w-full">
       {isClient && Chart ? (
-        <Chart options={options} series={series} type="line" height={300} width="100%" />
+        <Chart
+          options={options}
+          series={series}
+          type="line"
+          height={300}
+          width="100%"
+        />
       ) : (
         <div>Loading...</div>
       )}

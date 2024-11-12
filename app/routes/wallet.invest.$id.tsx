@@ -4,6 +4,7 @@ import { useLoaderData } from "@remix-run/react";
 import { InfoActionDetails, PercentChangeIndicator } from "~/components";
 import StockGraphic, { StockData } from "~/components/StockGraphic";
 import AppData from "~/services/appData";
+import formaterValues from "~/utils/formaterNumber";
 import { getSession, getUser, sessionStorage } from "~/utils/session.server";
 
 interface WalletData {
@@ -122,9 +123,7 @@ export default function SpecificWallet() {
           <h1 className="text-lg">{walletData.name}</h1>
           <p className="text-2xl font-semibold">
             R$
-            {walletData.total.toLocaleString("pt-BR", {
-              minimumFractionDigits: 2,
-            })}
+            {formaterValues(walletData.total.toFixed(2))}
           </p>
           <PercentChangeIndicator percentChange={walletData.rentability} />
         </div>

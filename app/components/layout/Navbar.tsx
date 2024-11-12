@@ -63,7 +63,7 @@ export default function Navbar({
             <img
               src={
                 user_photo
-                  ? "https://i.ytimg.com/vi/0aSyKFQ7KAo/maxresdefault.jpg"
+                  ? "https://i.im.ge/2024/11/07/kvIgn6.Group-48095491.png"
                   : user_photo
               }
               alt="teste"

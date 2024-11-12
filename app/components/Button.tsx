@@ -12,7 +12,7 @@ const button = tv({
   variants: {
     variant: {
       active: "bg-purple-800 hover:bg-purple-900",
-      disable: "bg-gray-300 cursor-not-allowed",
+      disable: "bg-gray cursor-not-allowed",
       buy: "bg-green-500",
       delete: "bg-red-500",
     },

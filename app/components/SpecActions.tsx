@@ -1,4 +1,5 @@
 import { useNavigate } from "@remix-run/react";
+import formaterValues from "~/utils/formaterNumber";
 import Variation from "./variation";
 
 interface SpecActionsProps {
@@ -56,22 +57,30 @@ export default function SpecActions({
       <div className="flex justify-between items-center text-xs">
         <p className="whitespace-nowrap">Open</p>
         <hr className="w-full mx-2 text-third" />
-        <p className="w-fit whitespace-nowrap">{open.toFixed(2)}</p>
+        <p className="w-fit whitespace-nowrap">
+          R$ {formaterValues(open.toFixed(2))}
+        </p>
       </div>
       <div className="flex justify-between items-center text-xs">
         <p className="whitespace-nowrap">Close</p>
         <hr className="w-full mx-2 text-third" />
-        <p className="w-fit whitespace-nowrap">{close.toFixed(2)}</p>
+        <p className="w-fit whitespace-nowrap">
+          R$ {formaterValues(close.toFixed(2))}
+        </p>
       </div>
       <div className="flex justify-between items-center text-xs">
         <p className="whitespace-nowrap">High</p>
         <hr className="w-full mx-2 text-third" />
-        <p className="w-fit whitespace-nowrap">{high.toFixed(2)}</p>
+        <p className="w-fit whitespace-nowrap">
+          R$ {formaterValues(high.toFixed(2))}
+        </p>
       </div>
       <div className="flex justify-between items-center text-xs">
         <p className="whitespace-nowrap">Low</p>
         <hr className="w-full mx-2 text-third" />
-        <p className="w-fit whitespace-nowrap">{low.toFixed(2)}</p>
+        <p className="w-fit whitespace-nowrap">
+          R$ {formaterValues(low.toFixed(2))}
+        </p>
       </div>
       <div className="flex justify-between items-center text-xs">
         <p className="whitespace-nowrap">Volume</p>

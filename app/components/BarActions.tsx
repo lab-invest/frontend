@@ -1,3 +1,5 @@
+import formaterValues from "~/utils/formaterNumber";
+
 interface ActionbarProps {
   nameAction: string;
   openAction: number;
@@ -33,27 +35,27 @@ export default function ActionBar({
         <div className="flex items-center text-gray">
           <p>Open</p>
           <div className="w-10 mr-1 ml-1 h-0.5 bg-third rounded-xl"></div>
-          <p>R$ {openAction.toFixed(2)}</p>
+          <p>R$ {formaterValues(openAction.toFixed(2))}</p>
         </div>
         <div className="flex items-center text-gray">
           <p>High</p>
           <div className="w-10 mr-1 ml-1 h-0.5 bg-third rounded-xl"></div>
-          <p>R$ {highAction.toFixed(2)}</p>
+          <p>R$ {formaterValues(highAction.toFixed(2))}</p>
         </div>
         <div className="flex items-center text-gray">
           <p>Close</p>
           <div className="w-10 mr-1 ml-1 h-0.5 bg-third rounded-xl"></div>
-          <p>R$ {closeAction.toFixed(2)}</p>
+          <p>R$ {formaterValues(closeAction.toFixed(2))}</p>
         </div>
         <div className="flex items-center text-gray">
           <p>Low</p>
           <div className="w-10 mr-1 ml-1 h-0.5 bg-third rounded-xl"></div>
-          <p>R$ {lowAction.toFixed(2)}</p>
+          <p>R$ {formaterValues(lowAction.toFixed(2))}</p>
         </div>
         <div className="flex items-center text-gray">
           <p>Volume</p>
           <div className="w-10 mr-1 ml-1 h-0.5 bg-third rounded-xl"></div>
-          <p>R$ {volumeAction.toFixed(2)}</p>
+          <p>{volumeAction.toFixed(2)}</p>
         </div>
       </div>
     </div>

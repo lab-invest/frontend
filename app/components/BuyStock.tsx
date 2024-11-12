@@ -1,6 +1,8 @@
 import { useFetcher } from "@remix-run/react";
 import { useEffect, useState } from "react";
 import { WalletsProps } from "~/types/wallets";
+import formaterValues from "~/utils/formaterNumber";
+import Button from "./Button";
 
 interface BuyStockProps {
   availableBalance: number;
@@ -143,24 +145,27 @@ export default function BuyStock({
 
         <div className="flex justify-between mb-2 p-4">
           <span className="text-gray-400">Saldo disponível</span>
-          <span>R$ {availableBalance.toFixed(2)}</span>
+          <span>R$ {formaterValues(availableBalance.toFixed(2))}</span>
         </div>
         <div className="flex justify-between p-4">
           <span className="text-gray-400">Valor estimado</span>
-          <span>R$ {estimatedValue.toFixed(2)}</span>
+          <span>R$ {formaterValues(estimatedValue.toFixed(2))}</span>
         </div>
 
         <div className="p-4 flex gap-4">
-          <button
+          <Button
+            text="Cancelar"
             type="button"
-            onClick={onClose}
-            className="bg-red-700 rounded w-full p-2"
-          >
-            Cancelar
-          </button>
-          <button type="submit" className="bg-green-700 rounded w-full p-2">
-            Comprar
-          </button>
+            onClickFunction={onClose}
+            variant="delete"
+          />
+          <Button
+            text="Comprar"
+            type="submit"
+            variant={
+              selectedWallet === "" && newWalletName === "" ? "disable" : "buy"
+            }
+          />
         </div>
       </div>
     </div>

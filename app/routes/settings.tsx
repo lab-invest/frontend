@@ -146,7 +146,7 @@ export default function Config() {
             popupDescription="Ao fazer isso sua conta será totalmente Deletada."
           />
         </div>
-        <ProfileImage imageUrl={userData.user_photo} />
+        <ProfileImage imageUrl="https://i.im.ge/2024/11/07/kvIgn6.Group-48095491.png" />
       </div>
     </Layout>
   );

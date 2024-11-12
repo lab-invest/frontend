@@ -136,7 +136,11 @@ export default function SpecificWallet() {
 
   return (
     <>
-      {fetcher.state === "loading" ? <Loading /> : null}
+      {fetcher.state === "loading" ? (
+        <div className="fixed inset-0 flex items-center justify-center bg-opacity-50 bg-gray-900 z-50">
+          <Loading />
+        </div>
+      ) : null}
       <div className="flex flex-col gap-6">
         <InfoActionPoints
           pointValue={stockData.stock_cotation}
