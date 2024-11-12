@@ -8,18 +8,23 @@ interface PercentChangeIndicatorProps {
 }
 
 function verifyAction(valueAction: number) {
-  if (Math.abs(Number(valueAction.toFixed(2))) > 0) {
+  if (Math.abs(Number(valueAction.toFixed(2))) === 0.0) {
+    return {
+      color: "text-gray",
+      imageArrow: <SvgArrow />,
+    };
+  }
+  if (Number(valueAction.toFixed(2)) > 0) {
     return {
       color: "text-green_good",
       imageArrow: <SvgGreenArrow />,
     };
-  } else if (Math.abs(Number(valueAction.toFixed(2))) < 0) {
+  } else if (Number(valueAction.toFixed(2)) < 0) {
     return {
       color: "text-red-500",
       imageArrow: <SvgRedArrow />,
     };
   } else {
-    x;
     return {
       color: "text-gray",
       imageArrow: <SvgArrow />,
