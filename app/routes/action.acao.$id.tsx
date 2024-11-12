@@ -143,6 +143,7 @@ export default function SpecificWallet() {
       ) : null}
       <div className="flex flex-col gap-6">
         <InfoActionPoints
+          typePts="R$"
           pointValue={stockData.stock_cotation}
           valueAction={stockData.stock_cotation}
           textPts={actionName}

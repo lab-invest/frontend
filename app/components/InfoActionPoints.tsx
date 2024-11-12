@@ -1,11 +1,11 @@
 import SvgArrow from "~/icons/arrowDefaultIcon";
 import SvgGreenArrow from "~/icons/arrowGreenIcon";
 import SvgRedArrow from "~/icons/arrowRedIcon";
-import formaterValues from "~/utils/formaterNumber";
 
 interface InfoActionPointsProps {
   textPts: string;
   pointValue?: number;
+  typePts: string;
   valueAction?: number;
   hasPercentual?: boolean;
 }
@@ -35,6 +35,7 @@ function verifyAction(valueAction: number) {
 export default function InfoActionPoints({
   textPts,
   valueAction,
+  typePts,
   pointValue,
   hasPercentual = false,
 }: InfoActionPointsProps) {
@@ -49,7 +50,7 @@ export default function InfoActionPoints({
     <div className="flex flex-col gap-y-1 text-center items-center">
       <p className="text-gray text-lg">{textPts}</p>
       <h1 className="text-white text-2xl sm:text-3xl lg:text-4xl font-semibold">
-        R$ {formaterValues((pointValue ?? 0).toFixed(2))}
+        {typePts} {(pointValue ?? 0).toFixed(2)}
       </h1>
       {hasPercentual ? (
         <div

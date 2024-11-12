@@ -48,6 +48,7 @@ export default function SearchAction() {
       <Searchbar onSearchChange={setSearchTerm} />
       <BoxVariation additionalData={data.additional_data} />
       <InfoActionPoints
+        typePts={`pts`}
         textPts={`IBOVESPA`}
         valueAction={ibovRent}
         pointValue={ibovPoints}
