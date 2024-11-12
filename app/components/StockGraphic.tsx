@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from "react";
 import { format, parseISO } from "date-fns";
 import { ptBR } from "date-fns/locale";
+import React, { useEffect, useState } from "react";
 
 export interface StockData {
   stocks: Array<{ [key: string]: { [date: string]: number } }>;
@@ -28,13 +28,22 @@ export default function StockGraphic({ stocks }: StockData) {
     )
   ).sort((a, b) => parseISO(a).getTime() - parseISO(b).getTime());
 
+  // Normalize data
   const series = stockSymbols.map((symbol) => {
     const data = dates.map((date) => {
       const stock = stocks.find((s) => s[symbol]);
       return stock ? stock[symbol][date] : 0;
     });
-    return { name: symbol, data };
+    const initialValue = data[0];
+    const normalizedData = data.map(
+      (value) => ((value - initialValue) / initialValue) * 100
+    );
+    return { name: symbol, data: normalizedData };
   });
+
+  // Calculate max absolute value for symmetric y-axis
+  const allNormalizedValues = series.flatMap((s) => s.data);
+  const maxAbsValue = Math.max(...allNormalizedValues.map((v) => Math.abs(v)));
 
   const options = {
     chart: {
@@ -49,7 +58,14 @@ export default function StockGraphic({ stocks }: StockData) {
       labels: { style: { colors: "#9ca3af" } },
     },
     yaxis: {
-      labels: { show: false },
+      min: -maxAbsValue,
+      max: maxAbsValue,
+      labels: {
+        formatter: function (value: number) {
+          return value.toFixed(2) + "%";
+        },
+        style: { colors: "#9ca3af" },
+      },
     },
     stroke: {
       curve: "smooth" as const,
